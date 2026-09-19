@@ -60,3 +60,5 @@ weights/clip/
 runs/mvp/*/weights/last.pt
 runs/mvp/person_carton_v1/weights/
 runs/mvp/person_carton_v3_expanded/weights/
+
+.vercel
