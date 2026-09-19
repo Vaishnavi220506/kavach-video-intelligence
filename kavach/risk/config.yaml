@@ -1,0 +1,40 @@
+# KAVACH Module 8: transparent risk policy.
+# Scores are policy heuristics, not calibrated probabilities or physical
+# injury predictions. Change these values only with documented validation.
+
+scoring:
+  weights:
+    severity: 0.35
+    duration: 0.15
+    motion_intensity: 0.15
+    spatial_context: 0.20
+    repeat_frequency: 0.10
+    detection_confidence: 0.05
+  category_thresholds:
+    LOW: 0
+    MEDIUM: 25
+    HIGH: 50
+    CRITICAL: 75
+  duration_reference_seconds: 5.0
+  motion_reference_px_per_second: 500.0
+  displacement_reference_px: 250.0
+  spatial_distance_reference_px: 150.0
+  repeat_reference_events: 3
+  repeat_window_seconds: 30.0
+
+severity_by_event:
+  ZONE_TRANSITION: 8
+  OBJECT_ACTIVITY: 5
+  MOTION_ANOMALY: 55
+  ZONE_VIOLATION: 55
+  POSSIBLE_DRAGGING: 45
+  POSSIBLE_DROP: 65
+  PALLET_OVERHANG: 60
+  UNSTABLE_STACK: 70
+  UNSAFE_HUMAN_FORKLIFT_PROXIMITY: 85
+  POSSIBLE_THROWING: 75
+  POSSIBLE_ROUGH_HANDLING: 65
+  AISLE_OBSTRUCTION: 55
+  IMPROPER_PLACEMENT: 45
+  COLLISION_RISK: 88
+  DEFAULT: 40

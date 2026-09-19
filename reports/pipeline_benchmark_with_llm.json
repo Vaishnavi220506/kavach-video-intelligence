@@ -1,0 +1,51 @@
+{
+  "device": "cpu",
+  "end_to_end": {
+    "frame_limit": 1,
+    "frames_processed": 1,
+    "processing_fps": 6.439722267248794,
+    "processing_seconds": 0.15528620000986848,
+    "stored_events": 0,
+    "wall_clock_seconds": 0.1708673999964958
+  },
+  "llm": {
+    "average_latency_seconds": 8.812999999994645,
+    "maximum_latency_seconds": 8.812999999994645,
+    "minimum_latency_seconds": 8.812999999994645,
+    "model": "llama3.2:3b",
+    "prompt_tokens": 587,
+    "requests": 1,
+    "resource_usage": {
+      "measurement": "Ollama /api/ps model allocation counters",
+      "models": [
+        {
+          "name": "llama3.2:3b",
+          "size_bytes": 2554708622,
+          "vram_bytes": 2554708622
+        }
+      ],
+      "total_model_size_bytes": 2554708622,
+      "total_vram_bytes": 2554708622
+    },
+    "response_tokens": 68
+  },
+  "memory": {
+    "note": "Python allocation tracing only; excludes native Torch/OpenCV allocation and full process RSS.",
+    "python_tracemalloc_peak_bytes_after_detection": 93917024,
+    "python_tracemalloc_peak_bytes_after_end_to_end": 104977735
+  },
+  "model": "yolo11n.pt",
+  "object_detection": {
+    "approximate_fps": 36.08696091332393,
+    "average_inference_time_ms": 27.710840001236647,
+    "frames_benchmarked": 5
+  },
+  "source_metadata": {
+    "duration_seconds": 75.8758,
+    "fps": 59.94005994005994,
+    "height": 1080,
+    "total_frames": 4548,
+    "width": 1920
+  },
+  "video": "data\\videos\\sample_warehouse.mp4"
+}

@@ -1,0 +1,26 @@
+{
+  "model": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\runs\\mvp\\person_carton_v2_100e\\weights\\best.pt",
+  "dataset": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp.yaml",
+  "split": "val",
+  "device": "cpu",
+  "classes": [
+    {
+      "class_name": "person",
+      "precision": 0.7716808946495833,
+      "recall": 0.42857142857142855,
+      "mAP50": 0.5279239766081871,
+      "mAP50_95": 0.2201006026943208
+    },
+    {
+      "class_name": "carton",
+      "precision": 1.0,
+      "recall": 0.7270713851900455,
+      "mAP50": 0.745,
+      "mAP50_95": 0.39649999999999996
+    }
+  ],
+  "mean_precision": 0.8858404473247916,
+  "mean_recall": 0.577821406880737,
+  "mAP50": 0.6364619883040936,
+  "mAP50_95": 0.30830030134716047
+}

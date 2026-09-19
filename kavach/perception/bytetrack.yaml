@@ -1,0 +1,10 @@
+# KAVACH CONTRIBUTION: explicit ByteTrack configuration for Module 3.
+# These values mirror the conservative Ultralytics ByteTrack defaults.
+tracker_type: bytetrack
+track_high_thresh: 0.25
+track_low_thresh: 0.10
+new_track_thresh: 0.25
+track_buffer: 30
+match_thresh: 0.80
+fuse_score: true
+

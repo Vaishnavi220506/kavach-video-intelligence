@@ -1,0 +1,13 @@
+{
+  "model": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\yolo11n.pt",
+  "dataset": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp.yaml",
+  "device": "cpu",
+  "classes": [
+    "person",
+    "carton"
+  ],
+  "epochs_requested": 25,
+  "run_directory": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\runs\\mvp\\person_carton_v1",
+  "best_checkpoint": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\runs\\mvp\\person_carton_v1\\weights\\best.pt",
+  "note": "Run evaluation/evaluate_detector.py on the held-out val split before enabling this checkpoint."
+}

@@ -1,0 +1,412 @@
+{
+  "model": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\runs\\mvp\\person_carton_v2_100e\\weights\\best.pt",
+  "dataset": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp.yaml",
+  "split": "val",
+  "device": "cpu",
+  "confidence_threshold": 0.05,
+  "iou_threshold": 0.5,
+  "images": 5,
+  "per_class": {
+    "person": {
+      "tp": 4,
+      "fp": 18,
+      "fn": 3,
+      "precision": 0.18181818181818182,
+      "recall": 0.5714285714285714,
+      "f1": 0.27586206896551724
+    },
+    "carton": {
+      "tp": 3,
+      "fp": 3,
+      "fn": 1,
+      "precision": 0.5,
+      "recall": 0.75,
+      "f1": 0.6
+    }
+  },
+  "confusion_matrix": {},
+  "cases": [
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.93013596534729,
+      "iou": 0.4898488007021149,
+      "bbox": [
+        443.1433410644531,
+        323.0373229980469,
+        787.481201171875,
+        1053.3665771484375
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\sample_warehouse_63fd5d16__f0003597.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.18618632853031158,
+      "iou": 0.3470576480954644,
+      "bbox": [
+        520.24658203125,
+        340.924560546875,
+        827.2102661132812,
+        1080.0
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\sample_warehouse_63fd5d16__f0003597.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "carton",
+      "expected": null,
+      "confidence": 0.16857506334781647,
+      "iou": 0.24919137792550897,
+      "bbox": [
+        484.9339599609375,
+        483.41473388671875,
+        702.8816528320312,
+        718.7166137695312
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\sample_warehouse_63fd5d16__f0003597.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.09372793138027191,
+      "iou": 0.21072018985406066,
+      "bbox": [
+        529.0113525390625,
+        340.97515869140625,
+        696.5621948242188,
+        599.7989501953125
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\sample_warehouse_63fd5d16__f0003597.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.050716012716293335,
+      "iou": 0.4320578527234558,
+      "bbox": [
+        389.82275390625,
+        358.6461181640625,
+        715.459716796875,
+        1055.791259765625
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\sample_warehouse_63fd5d16__f0003597.jpg"
+    },
+    {
+      "reason": "false_negative",
+      "predicted": null,
+      "expected": "person",
+      "confidence": null,
+      "iou": 0.0,
+      "bbox": [
+        455.00064000000003,
+        125.00027999999998,
+        735.0,
+        860.00076
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\sample_warehouse_63fd5d16__f0003597.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.4663250744342804,
+      "iou": 0.02577257890533018,
+      "bbox": [
+        448.0916748046875,
+        216.6881103515625,
+        561.7940673828125,
+        463.6737060546875
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000300.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.3535171449184418,
+      "iou": 0.45167538161979237,
+      "bbox": [
+        604.3231201171875,
+        226.8521728515625,
+        706.1661376953125,
+        479.5855712890625
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000300.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.16721004247665405,
+      "iou": 0.0030290597254052556,
+      "bbox": [
+        478.25067138671875,
+        220.9149169921875,
+        555.7955932617188,
+        422.52685546875
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000300.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.1526915431022644,
+      "iou": 0.3741849081018047,
+      "bbox": [
+        610.163330078125,
+        225.13980102539062,
+        693.803955078125,
+        435.0467529296875
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000300.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.06684833765029907,
+      "iou": 0.2160144078543802,
+      "bbox": [
+        619.03662109375,
+        229.15582275390625,
+        689.773681640625,
+        360.39520263671875
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000300.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.059254370629787445,
+      "iou": 0.0,
+      "bbox": [
+        290.3209228515625,
+        233.7894287109375,
+        419.8101806640625,
+        526.1055908203125
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000300.jpg"
+    },
+    {
+      "reason": "false_negative",
+      "predicted": null,
+      "expected": "person",
+      "confidence": null,
+      "iou": 0.0,
+      "bbox": [
+        555.0003200000001,
+        235.00008000000003,
+        680.0,
+        505.00008
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000300.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.6278815865516663,
+      "iou": 0.1025347946176748,
+      "bbox": [
+        444.55706787109375,
+        225.63070678710938,
+        570.334228515625,
+        463.9859619140625
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000330.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.4095938801765442,
+      "iou": 0.4300869669381704,
+      "bbox": [
+        601.195556640625,
+        250.64910888671875,
+        739.62841796875,
+        512.8468627929688
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000330.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.22862429916858673,
+      "iou": 0.0,
+      "bbox": [
+        449.28826904296875,
+        226.96420288085938,
+        544.8443603515625,
+        440.4886474609375
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000330.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "carton",
+      "expected": null,
+      "confidence": 0.19083452224731445,
+      "iou": 0.35430108576462727,
+      "bbox": [
+        615.8525390625,
+        455.39013671875,
+        725.69287109375,
+        537.112548828125
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000330.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.15066756308078766,
+      "iou": 0.3041864244223941,
+      "bbox": [
+        656.0760498046875,
+        280.9149169921875,
+        752.4532470703125,
+        473.060302734375
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000330.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "carton",
+      "expected": null,
+      "confidence": 0.08695331960916519,
+      "iou": 0.3517630532416059,
+      "bbox": [
+        638.356689453125,
+        443.1229248046875,
+        730.6217041015625,
+        538.2855224609375
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000330.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.08080124109983444,
+      "iou": 0.0,
+      "bbox": [
+        448.81146240234375,
+        262.86505126953125,
+        522.4679565429688,
+        435.25311279296875
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000330.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.0769168958067894,
+      "iou": 0.0038249262703362536,
+      "bbox": [
+        419.7474365234375,
+        223.95220947265625,
+        545.9890747070312,
+        522.6500854492188
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000330.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.0609913244843483,
+      "iou": 0.11875228541616141,
+      "bbox": [
+        577.0902099609375,
+        252.0411376953125,
+        663.4593505859375,
+        443.1058349609375
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000330.jpg"
+    },
+    {
+      "reason": "false_positive",
+      "predicted": "person",
+      "expected": null,
+      "confidence": 0.0524846687912941,
+      "iou": 0.013854266169573484,
+      "bbox": [
+        440.481201171875,
+        209.34805297851562,
+        597.3726806640625,
+        516.9781494140625
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000330.jpg"
+    },
+    {
+      "reason": "false_negative",
+      "predicted": null,
+      "expected": "person",
+      "confidence": null,
+      "iou": 0.0,
+      "bbox": [
+        685.00096,
+        225.00036,
+        815.0003199999999,
+        510.00012
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000330.jpg"
+    },
+    {
+      "reason": "false_negative",
+      "predicted": null,
+      "expected": "carton",
+      "confidence": null,
+      "iou": 0.0,
+      "bbox": [
+        589.99936,
+        390.00024,
+        740.0,
+        525.00024
+      ],
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000330.jpg"
+    }
+  ],
+  "per_image": [
+    {
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\sample_warehouse_63fd5d16__f0000600.jpg",
+      "ground_truth": 0,
+      "predictions": 0,
+      "errors": 0
+    },
+    {
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\sample_warehouse_63fd5d16__f0003597.jpg",
+      "ground_truth": 1,
+      "predictions": 5,
+      "errors": 6
+    },
+    {
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\sample_warehouse_63fd5d16__f0004496.jpg",
+      "ground_truth": 0,
+      "predictions": 0,
+      "errors": 0
+    },
+    {
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000300.jpg",
+      "ground_truth": 5,
+      "predictions": 10,
+      "errors": 7
+    },
+    {
+      "image": "C:\\Users\\Sri vaishnavi\\.codex\\.chatgpt-projects\\g-p-6aa17d7258dc819196c3702fafa5b66e\\forklift-safety-ai\\data\\mvp_dataset\\images\\val\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold_480bb881__f0000330.jpg",
+      "ground_truth": 5,
+      "predictions": 13,
+      "errors": 12
+    }
+  ]
+}

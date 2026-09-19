@@ -1,0 +1,30 @@
+{
+  "name": "KAVACH controlled behaviour cases",
+  "version": "1.0",
+  "data_type": "synthetic structured trajectories",
+  "labeling": "manual expected-event labels for deterministic rule evaluation",
+  "cases": [
+    {"id": "zone_inside_positive", "scenario": "zone_inside", "behaviour": "ZONE_VIOLATION", "expected": ["ZONE_VIOLATION"]},
+    {"id": "zone_clear_negative", "scenario": "zone_clear", "behaviour": "ZONE_VIOLATION", "expected": []},
+    {"id": "dragging_positive", "scenario": "dragging", "behaviour": "POSSIBLE_DRAGGING", "expected": ["POSSIBLE_DRAGGING"]},
+    {"id": "dragging_vertical_negative", "scenario": "dragging_vertical", "behaviour": "POSSIBLE_DRAGGING", "expected": []},
+    {"id": "drop_positive", "scenario": "drop", "behaviour": "POSSIBLE_DROP", "expected": ["POSSIBLE_DROP"]},
+    {"id": "drop_smooth_negative", "scenario": "drop_smooth", "behaviour": "POSSIBLE_DROP", "expected": []},
+    {"id": "overhang_positive", "scenario": "overhang", "behaviour": "PALLET_OVERHANG", "expected": ["PALLET_OVERHANG"]},
+    {"id": "overhang_supported_negative", "scenario": "supported", "behaviour": "PALLET_OVERHANG", "expected": []},
+    {"id": "unstable_stack_positive", "scenario": "unstable_stack", "behaviour": "UNSTABLE_STACK", "expected": ["UNSTABLE_STACK"]},
+    {"id": "stable_stack_negative", "scenario": "stable_stack", "behaviour": "UNSTABLE_STACK", "expected": []},
+    {"id": "proximity_positive", "scenario": "proximity", "behaviour": "UNSAFE_HUMAN_FORKLIFT_PROXIMITY", "expected": ["UNSAFE_HUMAN_FORKLIFT_PROXIMITY"]},
+    {"id": "proximity_far_negative", "scenario": "proximity_far", "behaviour": "UNSAFE_HUMAN_FORKLIFT_PROXIMITY", "expected": []},
+    {"id": "throwing_positive", "scenario": "throwing", "behaviour": "POSSIBLE_THROWING", "expected": ["POSSIBLE_THROWING"]},
+    {"id": "throwing_smooth_negative", "scenario": "throwing_smooth", "behaviour": "POSSIBLE_THROWING", "expected": []},
+    {"id": "rough_handling_positive", "scenario": "rough_handling", "behaviour": "POSSIBLE_ROUGH_HANDLING", "expected": ["POSSIBLE_ROUGH_HANDLING"]},
+    {"id": "rough_handling_smooth_negative", "scenario": "rough_handling_smooth", "behaviour": "POSSIBLE_ROUGH_HANDLING", "expected": []},
+    {"id": "aisle_obstruction_positive", "scenario": "aisle_obstruction", "behaviour": "AISLE_OBSTRUCTION", "expected": ["AISLE_OBSTRUCTION"]},
+    {"id": "aisle_clear_negative", "scenario": "aisle_clear", "behaviour": "AISLE_OBSTRUCTION", "expected": []},
+    {"id": "improper_placement_positive", "scenario": "improper_placement", "behaviour": "IMPROPER_PLACEMENT", "expected": ["IMPROPER_PLACEMENT"]},
+    {"id": "proper_placement_negative", "scenario": "proper_placement", "behaviour": "IMPROPER_PLACEMENT", "expected": []},
+    {"id": "collision_risk_positive", "scenario": "collision_risk", "behaviour": "COLLISION_RISK", "expected": ["COLLISION_RISK"]},
+    {"id": "collision_risk_far_negative", "scenario": "collision_risk_far", "behaviour": "COLLISION_RISK", "expected": []}
+  ]
+}

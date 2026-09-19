@@ -1,0 +1,273 @@
+{
+  "case_count": 22,
+  "case_results": [
+    {
+      "expected": [
+        "ZONE_VIOLATION"
+      ],
+      "id": "zone_inside_positive",
+      "match": true,
+      "predicted": [
+        "ZONE_VIOLATION"
+      ]
+    },
+    {
+      "expected": [],
+      "id": "zone_clear_negative",
+      "match": true,
+      "predicted": []
+    },
+    {
+      "expected": [
+        "POSSIBLE_DRAGGING"
+      ],
+      "id": "dragging_positive",
+      "match": true,
+      "predicted": [
+        "POSSIBLE_DRAGGING"
+      ]
+    },
+    {
+      "expected": [],
+      "id": "dragging_vertical_negative",
+      "match": true,
+      "predicted": []
+    },
+    {
+      "expected": [
+        "POSSIBLE_DROP"
+      ],
+      "id": "drop_positive",
+      "match": true,
+      "predicted": [
+        "POSSIBLE_DROP"
+      ]
+    },
+    {
+      "expected": [],
+      "id": "drop_smooth_negative",
+      "match": true,
+      "predicted": []
+    },
+    {
+      "expected": [
+        "PALLET_OVERHANG"
+      ],
+      "id": "overhang_positive",
+      "match": true,
+      "predicted": [
+        "PALLET_OVERHANG"
+      ]
+    },
+    {
+      "expected": [],
+      "id": "overhang_supported_negative",
+      "match": true,
+      "predicted": []
+    },
+    {
+      "expected": [
+        "UNSTABLE_STACK"
+      ],
+      "id": "unstable_stack_positive",
+      "match": true,
+      "predicted": [
+        "UNSTABLE_STACK"
+      ]
+    },
+    {
+      "expected": [],
+      "id": "stable_stack_negative",
+      "match": true,
+      "predicted": []
+    },
+    {
+      "expected": [
+        "UNSAFE_HUMAN_FORKLIFT_PROXIMITY"
+      ],
+      "id": "proximity_positive",
+      "match": true,
+      "predicted": [
+        "UNSAFE_HUMAN_FORKLIFT_PROXIMITY"
+      ]
+    },
+    {
+      "expected": [],
+      "id": "proximity_far_negative",
+      "match": true,
+      "predicted": []
+    },
+    {
+      "expected": [
+        "POSSIBLE_THROWING"
+      ],
+      "id": "throwing_positive",
+      "match": true,
+      "predicted": [
+        "POSSIBLE_THROWING"
+      ]
+    },
+    {
+      "expected": [],
+      "id": "throwing_smooth_negative",
+      "match": true,
+      "predicted": []
+    },
+    {
+      "expected": [
+        "POSSIBLE_ROUGH_HANDLING"
+      ],
+      "id": "rough_handling_positive",
+      "match": true,
+      "predicted": [
+        "POSSIBLE_ROUGH_HANDLING"
+      ]
+    },
+    {
+      "expected": [],
+      "id": "rough_handling_smooth_negative",
+      "match": true,
+      "predicted": []
+    },
+    {
+      "expected": [
+        "AISLE_OBSTRUCTION"
+      ],
+      "id": "aisle_obstruction_positive",
+      "match": true,
+      "predicted": [
+        "AISLE_OBSTRUCTION"
+      ]
+    },
+    {
+      "expected": [],
+      "id": "aisle_clear_negative",
+      "match": true,
+      "predicted": []
+    },
+    {
+      "expected": [
+        "IMPROPER_PLACEMENT"
+      ],
+      "id": "improper_placement_positive",
+      "match": true,
+      "predicted": [
+        "IMPROPER_PLACEMENT"
+      ]
+    },
+    {
+      "expected": [],
+      "id": "proper_placement_negative",
+      "match": true,
+      "predicted": []
+    },
+    {
+      "expected": [
+        "COLLISION_RISK"
+      ],
+      "id": "collision_risk_positive",
+      "match": true,
+      "predicted": [
+        "COLLISION_RISK"
+      ]
+    },
+    {
+      "expected": [],
+      "id": "collision_risk_far_negative",
+      "match": true,
+      "predicted": []
+    }
+  ],
+  "data_type": "synthetic structured trajectories",
+  "dataset": "KAVACH controlled behaviour cases",
+  "metrics_by_behaviour": {
+    "AISLE_OBSTRUCTION": {
+      "F1": 1.0,
+      "FN": 0,
+      "FP": 0,
+      "TP": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "COLLISION_RISK": {
+      "F1": 1.0,
+      "FN": 0,
+      "FP": 0,
+      "TP": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "IMPROPER_PLACEMENT": {
+      "F1": 1.0,
+      "FN": 0,
+      "FP": 0,
+      "TP": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "PALLET_OVERHANG": {
+      "F1": 1.0,
+      "FN": 0,
+      "FP": 0,
+      "TP": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "POSSIBLE_DRAGGING": {
+      "F1": 1.0,
+      "FN": 0,
+      "FP": 0,
+      "TP": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "POSSIBLE_DROP": {
+      "F1": 1.0,
+      "FN": 0,
+      "FP": 0,
+      "TP": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "POSSIBLE_ROUGH_HANDLING": {
+      "F1": 1.0,
+      "FN": 0,
+      "FP": 0,
+      "TP": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "POSSIBLE_THROWING": {
+      "F1": 1.0,
+      "FN": 0,
+      "FP": 0,
+      "TP": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "UNSAFE_HUMAN_FORKLIFT_PROXIMITY": {
+      "F1": 1.0,
+      "FN": 0,
+      "FP": 0,
+      "TP": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "UNSTABLE_STACK": {
+      "F1": 1.0,
+      "FN": 0,
+      "FP": 0,
+      "TP": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "ZONE_VIOLATION": {
+      "F1": 1.0,
+      "FN": 0,
+      "FP": 0,
+      "TP": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    }
+  }
+}

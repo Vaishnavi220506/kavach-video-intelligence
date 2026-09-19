@@ -30,16 +30,33 @@ __pycache__/
 data/raw/
 data/processed/
 data/labels/
+data/warehouse_dataset/
+data/warehouse.yaml
+data/mvp_dataset/
+data/mvp_dataset_v2/
 data/videos/*.mp4
 !data/dataset.yaml
 
 # ==========================================
 # Outputs & Heavy ML Logs
 # ==========================================
-outputs/*.mp4
+outputs/
 mlruns/
 
 # ==========================================
 # Streamlit
 # ==========================================
 .streamlit/
+
+# React build output and local dependencies
+frontend/node_modules/
+frontend/dist/
+
+# Local downloads, screenshots, and large optional model assets
+.downloads/
+weights/clip/
+
+# Keep selected evaluation artifacts, but avoid duplicate recovery checkpoints
+runs/mvp/*/weights/last.pt
+runs/mvp/person_carton_v1/weights/
+runs/mvp/person_carton_v3_expanded/weights/

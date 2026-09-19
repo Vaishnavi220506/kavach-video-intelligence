@@ -1,0 +1,68 @@
+{
+  "frame_level_observation": {
+    "conclusion": "presence and box coordinates only; no dragging event",
+    "per_frame": [
+      {
+        "bbox": [
+          10,
+          800,
+          40,
+          900
+        ],
+        "detected_class": "carton",
+        "frame": 0
+      },
+      {
+        "bbox": [
+          60,
+          800,
+          90,
+          900
+        ],
+        "detected_class": "carton",
+        "frame": 1
+      },
+      {
+        "bbox": [
+          110,
+          800,
+          140,
+          900
+        ],
+        "detected_class": "carton",
+        "frame": 2
+      },
+      {
+        "bbox": [
+          160,
+          800,
+          190,
+          900
+        ],
+        "detected_class": "carton",
+        "frame": 3
+      }
+    ]
+  },
+  "temporal_kavach_observation": {
+    "conclusion": "possible dragging is supported after timestamped displacement and duration accumulate",
+    "events": [
+      {
+        "confidence": 0.8,
+        "entities": [
+          "carton_7"
+        ],
+        "evidence": {
+          "duration_seconds": 1.5,
+          "history_window_seconds": 5.0,
+          "horizontal_displacement_px": 150.0,
+          "near_floor": true,
+          "person_nearby": false,
+          "vertical_displacement_px": 0.0
+        },
+        "timestamp": 1.5,
+        "type": "POSSIBLE_DRAGGING"
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+path: C:\Users\Sri vaishnavi\.codex\.chatgpt-projects\g-p-6aa17d7258dc819196c3702fafa5b66e\forklift-safety-ai\data\mvp_dataset
+train: images/train
+val: images/val
+names:
+  0: person
+  1: carton

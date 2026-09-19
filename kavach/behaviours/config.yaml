@@ -1,0 +1,147 @@
+# KAVACH Module 7 rule thresholds.
+# Distances and speeds are image-space approximations unless calibration is available.
+
+zone_violation:
+  enabled: true
+  zone_name: RESTRICTED_ZONE
+  monitored_classes: [person, worker, forklift, pallet_truck]
+  debounce_seconds: 0.25
+  cooldown_seconds: 3.0
+  base_confidence: 0.85
+
+# General signals make the analysis useful when the selected detector can
+# only see generic objects such as person or truck. They are not action proof.
+zone_transition:
+  enabled: true
+  monitored_classes: null
+  monitored_zones: null
+  debounce_seconds: 0.0
+  cooldown_seconds: 1.0
+
+object_activity:
+  enabled: true
+  monitored_classes: null
+  minimum_track_age_seconds: 0.5
+  minimum_moving_speed_px_per_second: 8.0
+  emit_initial_state: true
+  debounce_seconds: 0.0
+  cooldown_seconds: 5.0
+
+motion_anomaly:
+  enabled: true
+  monitored_classes: null
+  history_window_seconds: 4.0
+  minimum_history_states: 5
+  minimum_track_age_seconds: 1.0
+  minimum_baseline_speed_px_per_second: 15.0
+  speed_ratio_threshold: 4.0
+  minimum_speed_spike_px_per_second: 260.0
+  minimum_direction_speed_px_per_second: 80.0
+  direction_change_threshold_degrees: 135.0
+  minimum_consecutive_anomalous_states: 2
+  debounce_seconds: 0.0
+  cooldown_seconds: 5.0
+
+throwing:
+  enabled: true
+  throw_classes: [carton, box, package]
+  person_classes: [person, worker]
+  min_release_speed_px_per_second: 220.0
+  min_acceleration_px_per_second_squared: 120.0
+  near_floor_fraction: 0.85
+  require_person_nearby: false
+  debounce_seconds: 0.0
+  cooldown_seconds: 4.0
+
+rough_handling:
+  enabled: true
+  monitored_classes: [carton, box, package, pallet]
+  min_speed_px_per_second: 45.0
+  min_acceleration_px_per_second_squared: 180.0
+  direction_change_degrees: 100.0
+  person_classes: [person, worker]
+  debounce_seconds: 0.0
+  cooldown_seconds: 4.0
+
+# These zones are intentionally empty until a camera-specific aisle polygon
+# is configured. Enabling the detector without a polygon would be misleading.
+aisle_obstruction:
+  enabled: true
+  aisle_zones: []
+  monitored_classes: [carton, box, package, pallet, trolley]
+  min_stationary_seconds: 3.0
+  debounce_seconds: 0.25
+  cooldown_seconds: 5.0
+
+improper_placement:
+  enabled: true
+  allowed_zones: [staging_zone, loading_zone, pallet_zone]
+  monitored_classes: [carton, box, package, pallet, trolley]
+  min_stationary_seconds: 2.0
+  debounce_seconds: 0.25
+  cooldown_seconds: 5.0
+
+collision_risk:
+  enabled: true
+  human_classes: [person, worker]
+  equipment_classes: [forklift, pallet_truck, trolley, truck]
+  warning_distance_px: 140.0
+  minimum_closing_speed_px_per_second: 8.0
+  require_approaching_relation: false
+  debounce_seconds: 0.25
+  cooldown_seconds: 4.0
+
+dragging:
+  enabled: true
+  draggable_classes: [carton, box, package, pallet]
+  person_classes: [person, worker]
+  min_duration_seconds: 2.0
+  history_window_seconds: 5.0
+  min_horizontal_displacement_px: 40.0
+  max_vertical_displacement_px: 35.0
+  near_floor_fraction: 0.85
+  near_floor_min_px: 900.0
+  require_person_nearby: false
+  debounce_seconds: 0.0
+  cooldown_seconds: 3.0
+
+drop:
+  enabled: true
+  drop_classes: [carton, box, package, pallet]
+  min_pre_motion_speed_px_per_second: 20.0
+  min_downward_speed_px_per_second: 35.0
+  min_downward_displacement_px: 12.0
+  max_settled_speed_px_per_second: 5.0
+  min_deceleration_px_per_second: 15.0
+  max_pattern_seconds: 4.0
+  near_floor_fraction: 0.85
+  require_separation: true
+  debounce_seconds: 0.0
+  cooldown_seconds: 3.0
+
+overhang:
+  enabled: true
+  support_provider_classes: [pallet, platform, shelf, floor, pallet_truck]
+  min_support_ratio: 0.70
+  max_vertical_gap_px: 20.0
+  debounce_seconds: 0.25
+  cooldown_seconds: 3.0
+
+stacking:
+  enabled: true
+  stackable_classes: [carton, box, package, pallet]
+  min_stack_objects: 3
+  min_stable_support_ratio: 0.75
+  max_vertical_gap_px: 20.0
+  debounce_seconds: 0.5
+  cooldown_seconds: 3.0
+
+proximity:
+  enabled: true
+  human_classes: [person, worker]
+  forklift_classes: [forklift, pallet_truck, lift_truck]
+  max_distance_px: 100.0
+  min_motion_speed_px_per_second: 2.0
+  require_motion: true
+  debounce_seconds: 0.25
+  cooldown_seconds: 3.0

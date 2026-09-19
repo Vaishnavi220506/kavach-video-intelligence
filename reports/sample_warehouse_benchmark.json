@@ -1,0 +1,40 @@
+{
+  "device": "cpu",
+  "end_to_end": {
+    "events_by_behaviour": {
+      "OBJECT_ACTIVITY": 2,
+      "ZONE_TRANSITION": 2
+    },
+    "frame_limit": 300,
+    "frames_processed": 300,
+    "processing_fps": 18.364837589856645,
+    "processing_seconds": 16.335565099998348,
+    "stored_events": 4,
+    "unique_objects": {
+      "fire hydrant": 1,
+      "person": 2,
+      "sports ball": 1
+    },
+    "wall_clock_seconds": 16.354289800001425
+  },
+  "llm": null,
+  "memory": {
+    "note": "Python allocation tracing only; excludes native Torch/OpenCV allocation and full process RSS.",
+    "python_tracemalloc_peak_bytes_after_detection": 93680221,
+    "python_tracemalloc_peak_bytes_after_end_to_end": 117687124
+  },
+  "model": "yolo11n.pt",
+  "object_detection": {
+    "approximate_fps": 34.043055387002035,
+    "average_inference_time_ms": 29.374566666592727,
+    "frames_benchmarked": 30
+  },
+  "source_metadata": {
+    "duration_seconds": 75.8758,
+    "fps": 59.94005994005994,
+    "height": 1080,
+    "total_frames": 4548,
+    "width": 1920
+  },
+  "video": "data\\videos\\sample_warehouse.mp4"
+}

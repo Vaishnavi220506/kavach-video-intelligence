@@ -1,0 +1,43 @@
+{
+  "device": "cpu",
+  "end_to_end": {
+    "events_by_behaviour": {
+      "MOTION_ANOMALY": 3,
+      "OBJECT_ACTIVITY": 13,
+      "ZONE_VIOLATION": 9
+    },
+    "frame_limit": 300,
+    "frames_processed": 300,
+    "processing_fps": 13.3712894320821,
+    "processing_seconds": 22.436130900001444,
+    "stored_events": 25,
+    "unique_objects": {
+      "book": 2,
+      "keyboard": 1,
+      "person": 15,
+      "tennis racket": 1,
+      "truck": 2
+    },
+    "wall_clock_seconds": 22.46375420000186
+  },
+  "llm": null,
+  "memory": {
+    "note": "Python allocation tracing only; excludes native Torch/OpenCV allocation and full process RSS.",
+    "python_tracemalloc_peak_bytes_after_detection": 86770074,
+    "python_tracemalloc_peak_bytes_after_end_to_end": 100075758
+  },
+  "model": "yolo11n.pt",
+  "object_detection": {
+    "approximate_fps": 35.85425389217816,
+    "average_inference_time_ms": 27.89069333327158,
+    "frames_benchmarked": 30
+  },
+  "source_metadata": {
+    "duration_seconds": 15.033333333333333,
+    "fps": 30.0,
+    "height": 720,
+    "total_frames": 451,
+    "width": 1280
+  },
+  "video": "outputs\\sources\\upload_fbfcea1df11b_Throwing_seating_cartons_using_strap_to_hold.mp4"
+}

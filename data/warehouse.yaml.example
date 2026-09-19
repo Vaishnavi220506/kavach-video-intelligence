@@ -1,0 +1,20 @@
+# Copy this file to data/warehouse.yaml after preparing the dataset.
+# Paths are resolved relative to this YAML file when `path` is relative.
+# Use a camera-relevant, manually labelled validation split. The validation
+# split should contain complete videos that were not used for training.
+
+path: ./warehouse_dataset
+train: images/train
+val: images/val
+# Optional: add `test: images/test` only after a separate held-out test set is
+# available. Do not reuse the validation video as a test split.
+
+names:
+  0: person
+  1: carton          # canonical label for a cardboard box/carton
+  2: package
+  3: pallet
+  4: trolley
+  5: pallet_truck
+  6: forklift
+  7: truck

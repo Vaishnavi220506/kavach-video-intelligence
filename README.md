@@ -1,245 +1,316 @@
-# 🏗️ AI-Powered Warehouse Forklift Safety Monitoring System
+# KAVACH — Explainable Temporal Video Intelligence for Physical Operations
 
-<p align="center">
-  <img src="assets/banner.svg" alt="Project Banner" width="100%">
-</p>
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB)
+![OpenCV](https://img.shields.io/badge/OpenCV-video%20foundation-5C3EE8)
+![Ultralytics](https://img.shields.io/badge/Ultralytics-YOLO11-F7931E)
+![React](https://img.shields.io/badge/React-supervisor%20website-61DAFB)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Ultralytics](https://img.shields.io/badge/YOLO11-Ultralytics-F7931E?style=for-the-badge)
-![OpenCV](https://img.shields.io/badge/OpenCV-Computer_Vision-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-Live_Dashboard-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+KAVACH is a local, explainable video-intelligence prototype for warehouse and
+other physical operations. It turns video into structured observations,
+persistent short-term track identities, timestamped object histories,
+geometry-derived relationships, temporal behaviour events, transparent risk
+and incident records, evidence replay clips, and grounded natural-language
+search.
 
-An end-to-end **Computer Vision and Machine Learning** project that detects workers and machinery in real-time, tracks their movement, and generates dynamic alerts to prevent warehouse collisions.
+The project began from the open-source
+[`Sanaurrehmanarain/forklift-safety-ai`](https://github.com/sanaurrehmanarain/forklift-safety-ai)
+repository. The upstream prototype remains attributed and identifiable; the
+KAVACH modules are documented separately below.
 
-Built with **Python**, **YOLO11**, **OpenCV**, **ByteTrack**, and **Streamlit**, this project demonstrates a complete MLOps lifecycle: from custom data collection and auto-annotation to model training, spatial mathematics (zone detection), and interactive web deployment.
+Project repository: [Vaishnavi220506/forklift-safety-ai](https://github.com/Vaishnavi220506/forklift-safety-ai)
 
----
+The website currently runs locally because video processing, SQLite storage,
+YOLO inference, and Ollama require a backend runtime. GitHub hosts the source,
+documentation, evaluation reports, and reproducible setup; it is not being
+presented as a hosted production service.
 
-## 📑 Table of Contents
+## What problem does it explore?
 
-- [🏗️ AI-Powered Warehouse Forklift Safety Monitoring System](#️-ai-powered-warehouse-forklift-safety-monitoring-system)
-  - [📑 Table of Contents](#-table-of-contents)
-  - [📌 Overview](#-overview)
-  - [🖥️ Application Preview](#️-application-preview)
-    - [Dynamic Zone Defense in Action](#dynamic-zone-defense-in-action)
-  - [📂 Dataset \& Exploratory Data Analysis](#-dataset--exploratory-data-analysis)
-  - [🛠️ Tech Stack](#️-tech-stack)
-  - [🚀 Getting Started](#-getting-started)
-    - [1. Clone the repository](#1-clone-the-repository)
-    - [2. Install dependencies](#2-install-dependencies)
-    - [3. Run the Streamlit Application](#3-run-the-streamlit-application)
-    - [4. Test the System](#4-test-the-system)
-  - [🧠 The ML Lifecycle: Active vs. Deferred Notebooks](#-the-ml-lifecycle-active-vs-deferred-notebooks)
-    - [🟢 Active Pipeline (Executed)](#-active-pipeline-executed)
-    - [🟡 Deferred for Future Iterations (Code Provided)](#-deferred-for-future-iterations-code-provided)
-  - [📁 Project Structure](#-project-structure)
-  - [📜 License](#-license)
-  - [⭐ Support \& Citation](#-support--citation)
+Physical operations produce long video but supervisors need short, reviewable
+answers: what was observed, when did it occur, which tracked entities were
+involved, why was the risk score assigned, and where is the evidence clip?
 
----
+KAVACH explores a transparent architecture in which computer vision generates
+structured evidence first. A local LLM may explain or search those records,
+but it is not responsible for deciding what happened in the footage.
 
-## 📌 Overview
+## Demo
 
-Warehouses face significant safety hazards regarding the interaction between heavy machinery and pedestrian workers. Collisions result in severe injuries and operational downtime.
+Run the local React website and use the four sections:
 
-This project introduces a passive, AI-powered monitoring system that utilizes standard CCTV camera infrastructure to detect, track, and alert in real-time.
+1. **ANALYSE** — upload a local video or provide a direct HTTP(S) video URL;
+   inspect metadata, progress, tracked objects, events, and the processed
+   video.
+2. **EVENTS** — filter stored incidents by behaviour, risk, time, or entity;
+   generate and replay short evidence clips.
+3. **ASK KAVACH** — ask grounded questions such as “show all dragging
+   incidents” or “why was Event #32 considered high risk?”
+4. **ANALYTICS** — inspect behaviour counts, risk distribution, timeline, and
+   the evidence graph.
 
-**The Pipeline:**
-- 🎥 **Data Collection:** Custom frame extraction from warehouse footage.
-- 🏷️ **Auto-Annotation:** Simulated automated labeling pipeline.
-- 🤖 **Model Training:** Fine-tuning YOLO11 on custom worker data.
-- 🎯 **Multi-Object Tracking:** Assigning persistent IDs to moving workers.
-- 📐 **Spatial Logic:** Polygon-based danger zone breach detection.
-- 🌐 **Deployment:** Interactive Streamlit web application.
+The primary website is documented in [`docs/WEB_APP.md`](docs/WEB_APP.md).
+The original-compatible Streamlit interface remains available as a fallback.
 
----
+![Original upstream dashboard preview](assets/app_screenshot.png)
 
-## 🖥️ Application Preview
+The existing upstream visual examples are retained as attribution/context;
+they are not presented as an accuracy benchmark for KAVACH.
 
-The project features a live Streamlit dashboard where users can upload warehouse footage, adjust AI confidence thresholds, and switch between robust base models and custom-trained engines on the fly.
+## Architecture
 
-<p align="center">
-    <img src="assets/app_screenshot.png" alt="Streamlit App Dashboard" width="900">
-</p>
-
-### Dynamic Zone Defense in Action
-
-The core spatial logic utilizes OpenCV's `pointPolygonTest` to track the exact coordinates of a worker's feet. The system dynamically updates bounding box and zone colors based on spatial proximity to danger zones.
-
-<table>
-<tr>
-<td align="center">
-<b>🟢 Area Clear (Safe)</b><br>
-<img src="assets/no_worker_detected_green_box.png" width="300">
-</td>
-<td align="center">
-<b>🟠 Worker Detected (Approaching)</b><br>
-<img src="assets/working_coming_yellow_small_box.png" width="300">
-</td>
-<td align="center">
-<b>🔴 Zone Breach (Alert Triggered)</b><br>
-<img src="assets/worker_detected_red_box.png" width="300">
-</td>
-</tr>
-</table>
-
----
-
-## 📂 Dataset & Exploratory Data Analysis
-
-Instead of relying on pre-packaged Kaggle datasets, this project utilizes a custom data ingestion pipeline. Frames were extracted at 1 FPS from public warehouse CCTV footage to prevent highly correlated image duplication.
-
-Data was auto-annotated using a baseline model to simulate a manual labeling workflow, resulting in a dataset ready for fine-tuning.
-
-<p align="center">
-    <img src="assets/worker_distribution.png" alt="Worker Distribution Chart" width="600">
-</p>
-
-*EDA revealed a balanced distribution of workers per frame, ensuring the model learns to identify single and multiple subjects effectively.*
-
----
-
-## 🛠️ Tech Stack
-
-| Category | Technologies |
-|-----------|--------------|
-| **Language** | Python 3.10+ |
-| **Computer Vision** | OpenCV, PIL |
-| **Deep Learning** | PyTorch, Ultralytics YOLO11 |
-| **Tracking Algorithm** | ByteTrack |
-| **Web Application** | Streamlit |
-| **Data Science** | Pandas, NumPy, Matplotlib |
-| **Containerization** | Docker |
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/sanaurrehmanarain/forklift-safety-ai.git
-cd forklift-safety-ai
+```text
+Video upload / direct video URL
+             ↓
+VideoReader → YOLO Perception → ByteTrack
+             ↓
+Temporal Object Memory → Geometry / Zones
+             ↓
+Dynamic Scene Graph → Temporal Behaviour Engine
+             ↓
+Risk / Incident Engine → SQLite Event Store
+             ↓
+Evidence Replay → Grounded Ollama Assistant
+             ↓
+Natural-language video search → React Website → FastAPI local API
 ```
 
-### 2. Install dependencies
+Detailed interfaces are documented in
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
+## Implemented features
+
+- OpenCV `VideoReader` and `VideoWriter` abstractions with source timestamps,
+  metadata, frame numbering, and processed-video output.
+- Ultralytics YOLO detector loaded once per cached model resource, with CPU
+  fallback and standardized detections.
+- Explicit ByteTrack configuration with persistent short-term IDs and
+  configurable thresholds.
+- Bounded timestamp-aware object memory with displacement, speed in
+  pixels/second, direction, stationary duration, age, and last-seen state.
+- Reusable image-space geometry, configurable named polygons, and optional
+  planar homography support with documented assumptions.
+- Dynamic scene graph with numeric evidence on relations such as `near`,
+  `inside_zone`, `supported_by`, and `approaching`.
+- Six explainable temporal safety behaviours: zone violation, possible
+  dragging, possible drop, pallet overhang, unstable stack, and unsafe
+  human–forklift proximity, plus general zone-transition/activity signals and
+  an explainable motion-anomaly signal.
+- Additional cautious temporal rules for possible throwing, possible rough
+  handling, aisle obstruction, improper placement, and collision risk.
+- Transparent 0–100 risk scoring with separate detection confidence,
+  incident deduplication, cooldown, lifecycle, and review state.
+- SQLite event storage, bounded evidence replay, evidence snapshots, and
+  SHA-256 integrity verification for incident artifacts.
+- Supervisor review states (`NEW`, `REVIEWED`, `FALSE_POSITIVE`) with bounded
+  review history and transparent root-cause/prevention recommendations.
+- Local model choice reporting and a strict per-class YOLO evaluation command.
+- Local Ollama assistant with deterministic query routing/retrieval before any
+  generation and actual event/timestamp/clip references in results.
+- Streamlit supervisor dashboard with cached heavy resources and explicit
+  analysis so chat reruns do not reanalyse video.
+- Synthetic behaviour evaluation, temporal ablation, multi-video integration
+  tests, and reproducible performance scripts.
+
+## Technical design
+
+The stable hand-off types are:
+
+| Layer | Main interface | Output |
+|---|---|---|
+| Video | `VideoReader` | `FramePacket` |
+| Perception | `WarehouseDetector.detect` | `Detection` |
+| Tracking | `MultiObjectTracker.update` | `TrackedObject` |
+| Memory | `ObjectMemory.update` | bounded `ObjectState` history |
+| Spatial reasoning | `SceneGraph.update` | evidence-bearing relation edges |
+| Behaviour | `BehaviourRegistry.detect` | `BehaviourEvent` |
+| Risk/incident | `RiskEngine`, `IncidentManager` | scored `Incident` |
+| Persistence | `EventDatabase` | SQLite rows and JSON evidence |
+| Replay | `EvidenceReplay.create_clip` | short clip + metadata |
+| Search | `GroundedAssistant.ask` | answer + verified references |
+
+Risk and detection confidence are deliberately separate. Pixel distances are
+not metres without camera-specific calibration. “Possible drop” is cautious
+temporal evidence, not a claim of physical impact or damage.
+
+## Installation
 
 ```bash
+python -m venv .venv
+# Windows PowerShell
+.\.venv\Scripts\Activate.ps1
+# Linux/macOS
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Run the Streamlit Application
+The validated environment used Python 3.11 on Windows. Python 3.10+ is the
+intended baseline. See [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md)
+for model, Ollama, test, benchmark, and output instructions.
+
+## Model and Ollama setup
+
+The default detector uses the repository's `yolo11n.pt`. The optional custom
+weights path is used only when present; its current checkpoint exposes
+`worker` only. The website exposes a validated warehouse checkpoint slot at
+`weights/kavach_warehouse.pt` and an optional YOLO-World prompt-based slot at
+`weights/yolov8s-worldv2.pt` when those files exist. A model's configured class
+names do not establish reliable warehouse-class accuracy. A small, optional
+`person + carton` MVP checkpoint is available at
+`runs/mvp/person_carton_v2_100e/weights/best.pt`; it is deliberately not the
+default because its validation set is too small for a general accuracy claim.
+See
+[`docs/MODEL_UPGRADE.md`](docs/MODEL_UPGRADE.md),
+[`docs/UPGRADE_WAREHOUSE_INTELLIGENCE.md`](docs/UPGRADE_WAREHOUSE_INTELLIGENCE.md),
+and [`weights/README.md`](weights/README.md) for the data and evaluation
+workflow.
+
+For local natural-language explanations:
+
+```bash
+ollama serve
+ollama pull llama3.2:3b
+ollama list
+```
+
+The assistant defaults to `http://127.0.0.1:11434` and `llama3.2:3b`. Ollama
+is downstream of the structured event database and does not analyze raw video.
+
+## Usage
+
+Start the website:
+
+```bash
+cd frontend
+npm install
+npm run build
+cd ..
+.venv/Scripts/python.exe -m uvicorn app.api.main:app --host 0.0.0.0 --port 8000
+```
+
+Open `http://localhost:8000/`.
+
+For the original-compatible fallback:
 
 ```bash
 streamlit run app/streamlit/app.py
 ```
 
-## 3. Download Required Assets
-To run the Streamlit dashboard immediately without retraining the model:
-1. Go to the [Releases Tab](../../releases) on GitHub.
-2. Download `warehouse_assets.zip` and extract it.
-3. Place `sample_warehouse.mp4` into the `data/videos/` folder.
+The bundled sample, when present, is:
 
-### 4. Test the System
-
-1. Open your browser to `http://localhost:8501`.
-2. In the sidebar, under **Upload Video**, click **"Browse files"**.
-3. Navigate to the `data/videos/` folder in this repository and select `sample_warehouse.mp4`.
-4. Watch the AI process the video live, applying tracking IDs and triggering the Red Zone alert when the worker enters the restricted area!
-
-> 💡 **Alternatively**, you can run the app via Docker using the included `Dockerfile` and `docker-compose.yml`.
-
----
-
-## 🧠 The ML Lifecycle: Active vs. Deferred Notebooks
-
-This repository contains a full suite of Jupyter Notebooks mapping the entire Machine Learning Lifecycle. To prioritize an Agile, "MVP-first" development approach, the notebooks are categorized into **Active Pipeline** and **Deferred Productionization**.
-
-### 🟢 Active Pipeline (Executed)
-
-| Notebook | Description |
-|-----------|--------------|
-| `01_data_collection.ipynb` | Video ingestion and frame extraction. |
-| `02_annotation_analysis.ipynb` | Auto-annotation and EDA. |
-| `03_data_analysis.ipynb` | Train/Val splitting and YAML configuration. |
-| `04_training.ipynb` | YOLO11 model fine-tuning. |
-| `06_tracking.ipynb` | ByteTrack integration. |
-| `07_zone_detection.ipynb` | OpenCV polygon math and visual alerting. |
-
-### 🟡 Deferred for Future Iterations (Code Provided)
-
-The following notebooks are fully written and included in the repository but have been strategically deferred for future development phases:
-
-- **`05_model_comparison.ipynb`** — Designed to benchmark YOLO11 vs RT-DETR vs Faster R-CNN. Deferred because testing heavy architectures requires cloud GPU compute, whereas the current focus is proving the end-to-end pipeline logic locally.
-- **`08_evaluation.ipynb` & `09_error_analysis.ipynb`** — Deep statistical analytics (Confusion Matrices, F1 curves). Deferred because rigorous statistical evaluation requires a much larger dataset (10,000+ frames) to yield meaningful insights beyond our rapid-prototype dataset.
-- **`10_model_optimization.ipynb`** — Exporting models to ONNX/OpenVINO with INT8 quantization. Deferred following the "Make it work, make it right, make it fast" methodology. Optimization is reserved for final edge-device deployment.
-- **`11_development.ipynb`** — FastAPI backend creation. Deferred because Streamlit currently serves as an excellent, interactive full-stack alternative for the MVP.
-
----
-
-## 📁 Project Structure
-
-```
-.
-├── app/
-│   └── streamlit/
-│       └── app.py                 # Main dashboard application
-├── assets/                        # Screenshots and charts for README
-├── data/
-│   ├── processed/                 # Train/Val split images and labels
-│   ├── raw/                       # Raw extracted frames
-│   ├── videos/                    # Source CCTV footage
-│   └── dataset.yaml               # YOLO config file
-├── notebooks/                     # Step-by-step ML lifecycle notebooks
-├── outputs/                       # Annotated output videos
-├── reports/                       # EDA charts and metrics
-├── trained_models/                # Custom .pt model weights
-├── Dockerfile                     # Containerization setup
-├── requirements.txt               # Python dependencies
-└── README.md
+```text
+data/videos/sample_warehouse.mp4
 ```
 
----
+Example grounded questions:
 
-## 📜 License
+```text
+Show every dragging event.
+Find every time a worker was close to a forklift.
+Why was Event #32 considered high risk?
+Which behaviour occurred most frequently?
+Show incidents involving Carton #12.
+What happened around 12 minutes?
+Give me the timestamps worth reviewing.
+Summarize this video.
+```
 
-This project is licensed under the MIT License. See the
-[LICENSE](LICENSE) file for details.
+Deterministic counts and filters are computed by SQLite retrieval first. The
+LLM receives only the retrieved records, risk evidence, statistics, and
+configured operational rules. If evidence is missing, the assistant reports
+insufficient evidence.
 
----
+## Evaluation and measured performance
 
-## ⭐ Support & Citation
+The included controlled dataset has 22 synthetic structured-trajectory cases:
+one positive and one negative case for each of the 11 operational behaviour
+rules. The actual behaviour interfaces reproduce all designed cases: each
+rule has TP=1, FP=0, FN=0, precision=1.00, recall=1.00, and F1=1.00. This is a
+small rule sanity check, not real warehouse accuracy; no large labeled
+real-video dataset is included. A compact, manually reviewed two-class MVP
+was also trained on 15 frames (10 train / 5 validation) to exercise the full
+training and error-analysis loop. The improved 100-epoch checkpoint measured
+overall precision `0.886`, recall `0.578`, mAP50 `0.636`, and mAP50-95 `0.308`.
+The per-class and fixed-threshold confusion results are in
+[`docs/MODEL_UPGRADE.md`](docs/MODEL_UPGRADE.md). These are smoke-test values,
+not general warehouse accuracy.
 
-If you found this project useful, consider giving it a ⭐ Star on GitHub. It helps others discover the project and supports future improvements.
+On the validated machine, the bundled sample metadata was 1920×1080 at 59.94
+FPS, 4,548 frames, and 75.88 seconds. A bounded CPU benchmark measured:
 
-If you use this project in academic research, publications, educational
-materials, or derivative works, please cite the project.
+- YOLO11n detection: 19.85 FPS average over five measured frames after one
+  warmup frame.
+- End-to-end KAVACH: 13.46 FPS over the first 30 source frames, taking 2.23
+  seconds.
+- Local Ollama `llama3.2:3b`: 8.81 seconds for one grounded summary request.
+- Ollama `/api/ps`: 2,554,708,622 bytes reported model size/VRAM counters.
+- Python `tracemalloc`: 111,233,651 bytes peak after the 30-frame pipeline
+  prefix; this excludes native Torch/OpenCV allocation and full process RSS.
 
-This repository includes a `CITATION.cff` file, so GitHub provides a
-**"Cite this repository"** button in the repository sidebar. You can use it
-to obtain citations in BibTeX, APA, and other supported formats.
+These bounded measurements do not establish real-time performance,
+production readiness, or deployment-scale resource requirements. Re-run them
+with the included scripts on the target machine.
 
-**Suggested citation:**
+See [`docs/EVALUATION.md`](docs/EVALUATION.md) and the generated JSON files in
+`reports/` for details.
 
-Arain, S. U. R. (2026). forklift-safety-ai (Version 1.0) [Software].
-<https://github.com/sanaurrehmanarain/forklift-safety-ai>
+## Screenshots and assets
 
-**Author:** Sana Ur Rehman Arain
+The original repository's visual assets remain in `assets/` and are retained
+under the upstream attribution boundary. They show the original zone-alert
+prototype and should not be read as a measured KAVACH benchmark.
 
-**Profession:** Data Scientist
+## Limitations and responsible AI
 
-**GitHub:** <https://github.com/sanaurrehmanarain>
+- The default YOLO11n/COCO model has limited warehouse-specific semantics.
+- No valid local eight-class warehouse validation dataset is currently
+  included. The two-class MVP is a narrow proof of concept and does not claim
+  reliable package, pallet, trolley, pallet-truck, forklift, or truck support.
+- Track IDs can switch under occlusion, missed detections, similar objects,
+  or camera motion.
+- Behaviour thresholds are image-space approximations and camera dependent.
+- A monocular camera does not automatically provide metres, height, impact,
+  damage, injury, or intent.
+- Default dashboard zones are demonstration polygons and require camera
+  configuration.
+- Direct URL support means direct HTTP(S) video resources, not arbitrary
+  webpages or video-platform extraction.
+- The dashboard is a local supervisor prototype; live streams, authentication,
+  multi-site operation, and deployment-scale monitoring are out of scope.
+- Human review remains necessary. Events are evidence for review, not an
+  autonomous safety or disciplinary decision.
 
-**Contact:** <sana.arain.work@gmail.com>
+## Upstream attribution and license
 
-If you build upon this work, attribution is appreciated and helps others
-discover the original project.
+**Upstream code and assets:** the project began from
+[`Sanaurrehmanarain/forklift-safety-ai`](https://github.com/sanaurrehmanarain/forklift-safety-ai).
+The original Streamlit prototype, YOLO/OpenCV usage, notebooks, sample assets,
+and original attribution are retained as upstream context.
 
-> **Note:** The MIT License requires that the original copyright
-> notice be retained in copies of the Software.
+**KAVACH contributions:** the `kavach/` abstractions and intelligence layers,
+database/replay/assistant integration, dashboard orchestration, tests,
+evaluation artifacts, and KAVACH documentation were added in this project.
 
----
+The repository is distributed under the upstream MIT terms. The original
+copyright and permission notice in [`LICENSE`](LICENSE) must remain with
+copies and derivative works.
 
-© 2026 sana ur rehman arain.
+## Roadmap
+
+The immediate next step is to expand the warehouse detector dataset in
+[`docs/MODEL_UPGRADE.md`](docs/MODEL_UPGRADE.md): collect and manually label
+camera-relevant videos, validate a video-separated split, retrain the
+checkpoint, and report per-class metrics. Future work should be driven by that
+camera-specific labeled evaluation set and false-positive analysis. Candidate improvements include better
+warehouse-specific weights, calibration, occlusion handling, threshold
+tuning, and deployment measurement. Broader model or infrastructure changes
+should follow evidence from those evaluations.
+
+## Interview and release notes
+
+- [`docs/INTERVIEW_GUIDE.md`](docs/INTERVIEW_GUIDE.md) explains the design
+  decisions and limitations.
+- [`docs/PORTFOLIO_RELEASE.md`](docs/PORTFOLIO_RELEASE.md) contains an honest
+  project description, resume bullets, and release checklist.
+- [`docs/KAVACH_BASELINE.md`](docs/KAVACH_BASELINE.md) records the Module 0
+  upstream audit and attribution boundary.
