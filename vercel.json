@@ -1,19 +1,48 @@
 {
-  "experimentalServices": {
+  "services": {
     "frontend": {
-      "entrypoint": "frontend",
-      "routePrefix": "/"
+      "root": "frontend",
+      "rewrites": [
+        {
+          "source": "/(.*)",
+          "destination": "/index.html"
+        }
+      ]
     },
     "backend": {
-      "entrypoint": "backend/main.py",
-      "routePrefix": "/api",
-      "memory": 4096,
-      "maxDuration": 900,
-      "includeFiles": [
-        "yolo11n.pt",
-        "weights/**",
-        "runs/**"
+      "root": "backend",
+      "entrypoint": "main.py",
+      "functions": {
+        "main.py": {
+          "maxDuration": 900,
+          "includeFiles": "yolo11n.pt"
+        }
+      },
+      "rewrites": [
+        {
+          "source": "/api/:path(.*)?",
+          "destination": "/:path"
+        }
       ]
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api(/.*)?",
+      "destination": {
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "frontend"
+      }
+    }
+  ],
+  "build": {
+    "env": {
+      "VITE_API_BASE": "/api"
     }
   }
 }
