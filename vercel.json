@@ -1,48 +1,11 @@
 {
-  "services": {
-    "frontend": {
-      "root": "frontend",
-      "rewrites": [
-        {
-          "source": "/(.*)",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    "backend": {
-      "root": "backend",
-      "entrypoint": "main.py",
-      "functions": {
-        "main.py": {
-          "maxDuration": 900,
-          "includeFiles": "yolo11n.pt"
-        }
-      },
-      "rewrites": [
-        {
-          "source": "/api/:path(.*)?",
-          "destination": "/:path"
-        }
-      ]
-    }
-  },
+  "buildCommand": "cd frontend && npm run build",
+  "installCommand": "cd frontend && npm ci",
+  "outputDirectory": "frontend/dist",
   "rewrites": [
     {
-      "source": "/api(/.*)?",
-      "destination": {
-        "service": "backend"
-      }
-    },
-    {
       "source": "/(.*)",
-      "destination": {
-        "service": "frontend"
-      }
+      "destination": "/index.html"
     }
-  ],
-  "build": {
-    "env": {
-      "VITE_API_BASE": "/api"
-    }
-  }
+  ]
 }
