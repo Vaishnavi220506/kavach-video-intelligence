@@ -13,8 +13,6 @@ geometry-derived relationships, temporal behaviour events, transparent risk
 and incident records, evidence replay clips, and grounded natural-language
 search.
 
-Project repository: [Vaishnavi220506/kavach-video-intelligence](https://github.com/Vaishnavi220506/kavach-video-intelligence)
-
 The website currently runs locally because video processing, SQLite storage,
 YOLO inference, and Ollama require a backend runtime. GitHub hosts the source,
 documentation, evaluation reports, and reproducible setup; it is not being
@@ -43,14 +41,6 @@ Run the local React website and use the four sections:
    incidents” or “why was Event #32 considered high risk?”
 4. **ANALYTICS** — inspect behaviour counts, risk distribution, timeline, and
    the evidence graph.
-
-The primary website is documented in [`docs/WEB_APP.md`](docs/WEB_APP.md).
-The original-compatible Streamlit interface remains available as a fallback.
-
-![KAVACH dashboard preview](assets/app_screenshot.png)
-
-The preview illustrates the supervisor workflow and is not presented as an
-accuracy benchmark.
 
 ## Architecture
 
@@ -296,12 +286,3 @@ camera-specific labeled evaluation set and false-positive analysis. Candidate im
 warehouse-specific weights, calibration, occlusion handling, threshold
 tuning, and deployment measurement. Broader model or infrastructure changes
 should follow evidence from those evaluations.
-
-## Interview and release notes
-
-- [`docs/INTERVIEW_GUIDE.md`](docs/INTERVIEW_GUIDE.md) explains the design
-  decisions and limitations.
-- [`docs/PORTFOLIO_RELEASE.md`](docs/PORTFOLIO_RELEASE.md) contains an honest
-  project description, resume bullets, and release checklist.
-- [`docs/KAVACH_BASELINE.md`](docs/KAVACH_BASELINE.md) records the Module 0
-  baseline audit and provenance boundary.
