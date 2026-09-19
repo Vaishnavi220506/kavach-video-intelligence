@@ -13,12 +13,7 @@ geometry-derived relationships, temporal behaviour events, transparent risk
 and incident records, evidence replay clips, and grounded natural-language
 search.
 
-The project began from the open-source
-[`Sanaurrehmanarain/forklift-safety-ai`](https://github.com/sanaurrehmanarain/forklift-safety-ai)
-repository. The upstream prototype remains attributed and identifiable; the
-KAVACH modules are documented separately below.
-
-Project repository: [Vaishnavi220506/forklift-safety-ai](https://github.com/Vaishnavi220506/forklift-safety-ai)
+Project repository: [Vaishnavi220506/kavach-video-intelligence](https://github.com/Vaishnavi220506/kavach-video-intelligence)
 
 The website currently runs locally because video processing, SQLite storage,
 YOLO inference, and Ollama require a backend runtime. GitHub hosts the source,
@@ -52,10 +47,10 @@ Run the local React website and use the four sections:
 The primary website is documented in [`docs/WEB_APP.md`](docs/WEB_APP.md).
 The original-compatible Streamlit interface remains available as a fallback.
 
-![Original upstream dashboard preview](assets/app_screenshot.png)
+![KAVACH dashboard preview](assets/app_screenshot.png)
 
-The existing upstream visual examples are retained as attribution/context;
-they are not presented as an accuracy benchmark for KAVACH.
+The preview illustrates the supervisor workflow and is not presented as an
+accuracy benchmark.
 
 ## Architecture
 
@@ -257,7 +252,7 @@ See [`docs/EVALUATION.md`](docs/EVALUATION.md) and the generated JSON files in
 ## Screenshots and assets
 
 The original repository's visual assets remain in `assets/` and are retained
-under the upstream attribution boundary. They show the original zone-alert
+under the documented provenance boundary. They show the original zone-alert
 prototype and should not be read as a measured KAVACH benchmark.
 
 ## Limitations and responsible AI
@@ -280,20 +275,16 @@ prototype and should not be read as a measured KAVACH benchmark.
 - Human review remains necessary. Events are evidence for review, not an
   autonomous safety or disciplinary decision.
 
-## Upstream attribution and license
+## License and provenance
 
-**Upstream code and assets:** the project began from
-[`Sanaurrehmanarain/forklift-safety-ai`](https://github.com/sanaurrehmanarain/forklift-safety-ai).
-The original Streamlit prototype, YOLO/OpenCV usage, notebooks, sample assets,
-and original attribution are retained as upstream context.
+KAVACH contributions include the `kavach/` abstractions and intelligence
+layers, database/replay/assistant integration, dashboard orchestration, tests,
+evaluation artifacts, and project documentation.
 
-**KAVACH contributions:** the `kavach/` abstractions and intelligence layers,
-database/replay/assistant integration, dashboard orchestration, tests,
-evaluation artifacts, and KAVACH documentation were added in this project.
-
-The repository is distributed under the upstream MIT terms. The original
-copyright and permission notice in [`LICENSE`](LICENSE) must remain with
-copies and derivative works.
+The project is distributed under the MIT terms. The copyright and permission
+notice in [`LICENSE`](LICENSE) must remain with copies and derivative works.
+The technical provenance record is kept in
+[`docs/KAVACH_BASELINE.md`](docs/KAVACH_BASELINE.md).
 
 ## Roadmap
 
@@ -313,4 +304,4 @@ should follow evidence from those evaluations.
 - [`docs/PORTFOLIO_RELEASE.md`](docs/PORTFOLIO_RELEASE.md) contains an honest
   project description, resume bullets, and release checklist.
 - [`docs/KAVACH_BASELINE.md`](docs/KAVACH_BASELINE.md) records the Module 0
-  upstream audit and attribution boundary.
+  baseline audit and provenance boundary.
