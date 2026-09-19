@@ -1,0 +1,14 @@
+.venv
+frontend/node_modules
+frontend/dist
+__pycache__
+.pytest_cache
+.downloads
+outputs
+data
+notebooks
+tests
+evaluation
+reports
+docs
+project_setup.ipynb

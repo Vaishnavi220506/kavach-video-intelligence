@@ -1,0 +1,17 @@
+[project]
+name = "kavach-backend"
+version = "1.0.0"
+description = "KAVACH FastAPI video intelligence backend"
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.30,<1",
+  "python-multipart>=0.0.9,<1",
+  "ultralytics==8.4.145",
+  "torch==2.9.1",
+  "torchvision==0.24.1",
+  "opencv-python-headless==4.9.0.80",
+  "numpy==1.26.4",
+  "lap==0.5.13",
+  "PyYAML==6.0.3"
+]
