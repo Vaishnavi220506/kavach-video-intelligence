@@ -44,20 +44,86 @@ Run the local React website and use the four sections:
 
 ## Architecture
 
-```text
-Video upload / direct video URL
-             ↓
-VideoReader → YOLO Perception → ByteTrack
-             ↓
-Temporal Object Memory → Geometry / Zones
-             ↓
-Dynamic Scene Graph → Temporal Behaviour Engine
-             ↓
-Risk / Incident Engine → SQLite Event Store
-             ↓
-Evidence Replay → Grounded Ollama Assistant
-             ↓
-Natural-language video search → React Website → FastAPI local API
+```mermaid
+flowchart TD
+
+subgraph group_experience["Supervisor Experience"]
+  node_react_ui["React Website<br/>[App.jsx]"]
+  node_fastapi_api["FastAPI API<br/>[main.py]"]
+  node_streamlit_ui["Streamlit Dashboard<br/>[app.py]"]
+end
+
+subgraph group_ingestion["Video Perception"]
+  node_analysis["Analysis Orchestrator<br/>[analysis.py]"]
+  node_video_reader["Video Reader<br/>[reader.py]"]
+  node_detector["YOLO Detector<br/>[detector.py]"]
+  node_tracker["ByteTrack Tracker<br/>[tracker.py]"]
+end
+
+subgraph group_reasoning["Temporal Reasoning"]
+  node_object_memory["Object Memory<br/>[object_memory.py]"]
+  node_spatial_reasoning["Spatial Reasoning<br/>[scene_graph.py]"]
+  node_behaviour_engine["Behaviour Engine<br/>[registry.py]"]
+end
+
+subgraph group_incidents["Incident Operations"]
+  node_risk_engine["Risk Engine<br/>[engine.py]"]
+  node_incident_manager["Incident Manager<br/>[manager.py]"]
+  node_event_database[("Event Database<br/>[database.py]")]
+  node_evidence_store["Evidence Store<br/>[evidence.py]"]
+  node_replay["Evidence Replay<br/>[replay.py]"]
+  node_prevention["Prevention Rules<br/>[engine.py]"]
+end
+
+subgraph group_search["Grounded Search"]
+  node_assistant["Grounded Assistant<br/>[assistant.py]"]
+  node_query_router["Query Router<br/>[query_router.py]"]
+end
+
+node_supervisor(("Supervisor"))
+node_video_source["Video Source"]
+node_ollama["Ollama Service"]
+
+node_supervisor -->|"submits video"| node_react_ui
+node_supervisor -->|"reviews results"| node_streamlit_ui
+node_react_ui -->|"calls API"| node_fastapi_api
+node_fastapi_api -->|"starts analysis"| node_analysis
+node_streamlit_ui -->|"runs analysis"| node_analysis
+node_video_source -->|"provides frames"| node_video_reader
+node_analysis -->|"opens source"| node_video_reader
+node_analysis -->|"detects objects"| node_detector
+node_analysis -->|"updates tracks"| node_tracker
+node_analysis -->|"updates history"| node_object_memory
+node_analysis -->|"builds relations"| node_spatial_reasoning
+node_analysis -->|"detects behaviours"| node_behaviour_engine
+node_analysis -->|"scores events"| node_risk_engine
+node_analysis -->|"ingests incidents"| node_incident_manager
+node_analysis -->|"stores results"| node_event_database
+node_incident_manager -->|"persists incidents"| node_event_database
+node_analysis -->|"records evidence"| node_evidence_store
+node_fastapi_api -->|"queries records"| node_event_database
+node_fastapi_api -->|"creates replay"| node_replay
+node_replay -->|"writes artifacts"| node_evidence_store
+node_fastapi_api -->|"requests guidance"| node_prevention
+node_react_ui -->|"asks questions"| node_assistant
+node_assistant -->|"routes query"| node_query_router
+node_assistant -->|"retrieves evidence"| node_event_database
+node_assistant -.->|"generates explanation"| node_ollama
+node_event_database -->|"returns records"| node_assistant
+node_fastapi_api -->|"returns results"| node_react_ui
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_react_ui,node_fastapi_api,node_streamlit_ui toneBlue
+class node_analysis,node_video_reader,node_detector,node_tracker toneAmber
+class node_object_memory,node_spatial_reasoning,node_behaviour_engine toneMint
+class node_risk_engine,node_incident_manager,node_event_database,node_evidence_store,node_replay,node_prevention toneRose
+class node_assistant,node_query_router,node_supervisor,node_video_source,node_ollama toneIndigo
 ```
 
 Detailed interfaces are documented in
