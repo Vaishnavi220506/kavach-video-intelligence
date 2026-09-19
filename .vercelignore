@@ -6,6 +6,8 @@ __pycache__
 .downloads
 outputs
 data
+weights
+runs
 notebooks
 tests
 evaluation
