@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import itertools
 from collections.abc import Iterable
 
 from ..intelligence.motion import MotionError, calculate_motion
@@ -72,15 +73,9 @@ class PossibleDropDetector(BehaviourDetector):
         node_id: str,
     ) -> tuple[bool, str | None, str | None]:
         snapshots = context.scene_graph.snapshots
-        for previous, current in zip(snapshots, snapshots[1:], strict=False):
-            previous_pairs = {
-                pair
-                for pair in self._snapshot_relations(previous, node_id)
-            }
-            current_pairs = {
-                pair
-                for pair in self._snapshot_relations(current, node_id)
-            }
+        for previous, current in itertools.pairwise(snapshots):
+            previous_pairs = set(self._snapshot_relations(previous, node_id))
+            current_pairs = set(self._snapshot_relations(current, node_id))
             disappeared = previous_pairs - current_pairs
             if disappeared:
                 relation, other = sorted(disappeared)[0]

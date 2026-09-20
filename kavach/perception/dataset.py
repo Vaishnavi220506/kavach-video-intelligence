@@ -114,7 +114,7 @@ def _normalise_names(value: Any) -> tuple[str, ...]:
             ordered = [value[key] for key in sorted(value, key=lambda item: int(item))]
         except (TypeError, ValueError, KeyError) as exc:
             raise ValueError("names mapping keys must be integer class IDs") from exc
-    elif isinstance(value, (list, tuple)):
+    elif isinstance(value, list | tuple):
         ordered = list(value)
     else:
         raise ValueError("names must be a list or an integer-keyed mapping")
@@ -134,7 +134,7 @@ def _resolve_path(value: object, base: Path) -> Path:
 
 
 def _split_values(value: object) -> tuple[str, ...]:
-    if isinstance(value, (list, tuple)):
+    if isinstance(value, list | tuple):
         return tuple(str(item) for item in value)
     return (str(value),)
 

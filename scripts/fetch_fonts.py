@@ -62,7 +62,7 @@ PROPERTY_PATTERN = re.compile(r"(?P<name>[a-z\-]+)\s*:\s*(?P<value>[^;]+);")
 
 def fetch(url: str) -> bytes:
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(request, timeout=60) as response:  # noqa: S310
+    with urllib.request.urlopen(request, timeout=60) as response:
         return response.read()
 
 
@@ -82,10 +82,10 @@ def build_family(label: str, query: str, output: Path) -> list[str]:
         if url_match is None:
             continue
 
-        properties = dict(
-            (item.group("name"), item.group("value").strip())
+        properties = {
+            item.group("name"): item.group("value").strip()
             for item in PROPERTY_PATTERN.finditer(block)
-        )
+        }
 
         style = properties.get("font-style", "normal")
         # A variable family reports a range such as "400 700". Keep it intact
@@ -151,7 +151,7 @@ def main() -> None:
         print(f"{label}:")
         try:
             all_rules.extend(build_family(label, query, args.output))
-        except Exception as error:  # noqa: BLE001
+        except Exception as error:
             print(f"  failed: {error}", file=sys.stderr)
             raise SystemExit(1) from error
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import itertools
 from collections.abc import Iterable
 
 import cv2
@@ -38,7 +39,7 @@ def draw_trajectory(
         for x, y in trajectory
     ]
     annotated = frame.copy()
-    for start, end in zip(points, points[1:], strict=False):
+    for start, end in itertools.pairwise(points):
         cv2.line(annotated, start, end, color, thickness, cv2.LINE_AA)
     for point in points:
         cv2.circle(annotated, point, point_radius, color, -1, cv2.LINE_AA)

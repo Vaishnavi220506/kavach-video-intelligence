@@ -2,12 +2,17 @@
 
 from __future__ import annotations
 
+import sys
 from collections import Counter, defaultdict
 from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
 
 import yaml
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from kavach.perception.dataset import validate_yolo_dataset
 from kavach.perception.detector import resolve_device
@@ -219,7 +224,9 @@ def evaluate_confusion_cases(
             result_names = getattr(result, "names", None) or names
             for coordinate, confidence, class_id_value in zip(coordinates, confidences, class_ids, strict=False):
                 class_id = int(class_id_value)
-                class_name = result_names[class_id] if isinstance(result_names, list) else result_names[class_id]
+                # Indexing works the same for a list of names and a dict
+                # keyed by class id, so no branch is needed here.
+                class_name = result_names[class_id]
                 predicted.append(Box(class_id, str(class_name), tuple(float(v) for v in coordinate), float(confidence)))
         counts, cases = match_boxes(labels, predicted, iou_threshold=iou_threshold)
         totals.update(counts)

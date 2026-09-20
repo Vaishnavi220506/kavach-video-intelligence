@@ -13,6 +13,9 @@ concurrency:
 
 env:
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  # kavach is used from the working tree rather than pip-installed, so the
+  # repository root has to be importable for scripts run from the root.
+  PYTHONPATH: ${{ github.workspace }}
 
 jobs:
   tests:
@@ -41,7 +44,10 @@ jobs:
             torch==2.9.1 torchvision==0.24.1
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Lint
+        run: python -m ruff check .
 
       - name: Run test suite
         run: python -m pytest tests/ -q
@@ -64,7 +70,7 @@ jobs:
             torch==2.9.1 torchvision==0.24.1
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt -r requirements-dev.txt
 
       - name: Re-run the 22-case controlled evaluation
         # Guards the claim in the README: every designed behaviour case still

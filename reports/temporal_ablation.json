@@ -48,6 +48,24 @@
     "conclusion": "possible dragging is supported after timestamped displacement and duration accumulate",
     "events": [
       {
+        "confidence": 0.75,
+        "entities": [
+          "carton_7"
+        ],
+        "evidence": {
+          "activity_state": "moving",
+          "direction": "right",
+          "dx_px": 50.0,
+          "dy_px": 0.0,
+          "speed_px_per_second": 100.0,
+          "timestamp_aware": true,
+          "track_age_seconds": 0.5,
+          "transition": "initial"
+        },
+        "timestamp": 0.5,
+        "type": "OBJECT_ACTIVITY"
+      },
+      {
         "confidence": 0.8,
         "entities": [
           "carton_7"

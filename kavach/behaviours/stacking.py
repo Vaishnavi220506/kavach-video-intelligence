@@ -79,7 +79,7 @@ class UnstableStackDetector(BehaviourDetector):
         start: str,
         chain: tuple[str, ...] = (),
     ) -> Iterable[tuple[tuple[str, ...], tuple[tuple[float, float, float], ...]]]:
-        current_chain = chain + (start,)
+        current_chain = (*chain, start)
         if len(current_chain) >= self.min_stack_objects:
             yield current_chain, ()
             return
@@ -91,7 +91,7 @@ class UnstableStackDetector(BehaviourDetector):
                 lower,
                 current_chain,
             ):
-                yield result_chain, (measure,) + result_measures
+                yield result_chain, (measure, *result_measures)
 
     def evaluate(self, context: BehaviourContext) -> Iterable[BehaviourCandidate]:
         object_nodes = [

@@ -68,7 +68,7 @@ def _values(metrics: Any, attribute: str) -> list[float]:
         return []
     if hasattr(value, "tolist"):
         value = value.tolist()
-    if isinstance(value, (int, float)):
+    if isinstance(value, int | float):
         return [float(value)]
     return [float(item) for item in value]
 

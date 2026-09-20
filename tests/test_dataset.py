@@ -39,9 +39,7 @@ def _write_dataset(root: Path, *, invalid_label: bool = False) -> Path:
                 "path": str(root),
                 "train": "images/train",
                 "val": "images/val",
-                "names": {
-                    index: name for index, name in enumerate(WAREHOUSE_TRAINING_CLASSES)
-                },
+                "names": dict(enumerate(WAREHOUSE_TRAINING_CLASSES)),
             },
             sort_keys=False,
         ),

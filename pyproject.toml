@@ -39,6 +39,15 @@ ignore = [
   # intended characters, not homoglyph mistakes.
   "RUF001",
   "RUF002",
+  # The rules below ask for structural rewrites of working, covered code
+  # rather than flagging defects. The lint gate is meant to hold the line on
+  # imports, dead code and modern syntax, not to churn tracker and dashboard
+  # internals for a style preference.
+  "SIM102",  # nested ifs often carry a comment per condition
+  "SIM105",  # an explicit try/except/pass reads better than contextlib.suppress here
+  "SIM115",  # the tracker deliberately holds a file handle beyond one block
+  "SIM117",  # nested `with` is clearer when the contexts are unrelated
+  "RUF012",  # ClassVar annotations across existing dataclasses and test fixtures
 ]
 
 [tool.ruff.lint.per-file-ignores]

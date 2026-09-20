@@ -1,0 +1,6 @@
+# Development and CI dependencies.
+#
+# Kept separate from requirements.txt so installing the pipeline does not pull
+# in test and lint tooling. CI installs both.
+pytest>=7.4,<9
+ruff>=0.9,<0.13
