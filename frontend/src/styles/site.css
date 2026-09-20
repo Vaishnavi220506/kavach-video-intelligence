@@ -204,11 +204,15 @@
   gap: var(--space-5);
 }
 
+/* The folio is a citable section mark, not decoration, so it carries body
+   contrast. It stays recessive through size and margin position instead of
+   through a tone that fails against both the paper and the sunk ground.
+   --ink-4 is reserved for rules and hairlines, which carry no text. */
 .section__folio {
   margin: 0.55rem 0 0;
   font-size: var(--step--1);
   font-weight: 500;
-  color: var(--ink-4);
+  color: var(--ink-2);
   letter-spacing: 0.04em;
 }
 
@@ -265,7 +269,7 @@
   content: counter(stage, decimal-leading-zero);
   font-family: var(--font-measure);
   font-size: var(--step--1);
-  color: var(--ink-4);
+  color: var(--ink-2);
 }
 
 .stage__head {

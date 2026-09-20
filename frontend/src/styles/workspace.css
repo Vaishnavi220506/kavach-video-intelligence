@@ -600,10 +600,13 @@
   margin-left: auto;
 }
 
+/* This line states whether any text was generated or whether the answer is
+   pure retrieval. That is the most important sentence on the surface for a
+   reader deciding how much to trust it, so it is set at body contrast. */
 .answer__origin {
   margin-top: var(--space-3);
-  font-size: 0.7rem;
-  color: var(--ink-4);
+  font-size: 0.72rem;
+  color: var(--ink-2);
 }
 
 /* --- Responsive -------------------------------------------------------- */
