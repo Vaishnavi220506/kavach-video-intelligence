@@ -11,7 +11,7 @@
   ],
   "headers": [
     {
-      "source": "/fonts/(.*).woff2",
+      "source": "/fonts/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -20,7 +20,16 @@
       ]
     },
     {
-      "source": "/(fonts/fonts.css|demo/(.*).json)",
+      "source": "/fonts/fonts.css",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/demo/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
