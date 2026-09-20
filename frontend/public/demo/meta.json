@@ -1,0 +1,34 @@
+{
+  "behaviour_counts": {
+    "COLLISION_RISK": 1,
+    "IMPROPER_PLACEMENT": 2,
+    "MOTION_ANOMALY": 1,
+    "OBJECT_ACTIVITY": 16,
+    "PALLET_OVERHANG": 1,
+    "POSSIBLE_DRAGGING": 1,
+    "POSSIBLE_DROP": 1,
+    "POSSIBLE_ROUGH_HANDLING": 4,
+    "POSSIBLE_THROWING": 3,
+    "UNSAFE_HUMAN_FORKLIFT_PROXIMITY": 1,
+    "UNSTABLE_STACK": 1,
+    "ZONE_TRANSITION": 12,
+    "ZONE_VIOLATION": 4
+  },
+  "duration": 84.0,
+  "event_count": 48,
+  "fps": 25.0,
+  "frames_processed": 421,
+  "generator": "scripts/build_demo_dataset.py",
+  "height": 1080,
+  "name": "synthetic_reconstruction.mp4",
+  "provenance": "Synthetic reconstruction. Scripted tracked-object trajectories were processed by the real KAVACH behaviour, risk, incident and prevention engines using the repository's committed thresholds. Object detection was not involved: these are not detections from camera footage, and no perception accuracy may be inferred from this dataset.",
+  "track_observations": 495,
+  "unique_objects": {
+    "carton": 4,
+    "forklift": 1,
+    "pallet": 1,
+    "person": 2
+  },
+  "video_id": "demo-warehouse-reconstruction",
+  "width": 1920
+}
