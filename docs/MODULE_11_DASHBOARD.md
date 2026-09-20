@@ -6,20 +6,36 @@ adapter. The original Streamlit interface remains as a compatibility fallback.
 Neither interface reimplements detection, tracking, behaviour rules, risk,
 SQLite, replay, or the grounded assistant.
 
-## Sections
+## Surfaces
 
-The dashboard has four sections:
+The bundle serves two surfaces. The public **record** presents the project as
+the artifact it produces and is readable without any backend. The **workspace**
+is the operator surface and keeps four sections. The section names below were
+shortened during the redesign; their responsibilities are unchanged.
 
-1. **ANALYSE** — select a local upload or direct video URL, start analysis,
-   inspect metadata and progress, watch the annotated output, and review
-   detected tracks and stored events.
-2. **EVENTS** — filter stored incidents by behaviour, risk, source time, and
-   entity. Each event exposes its evidence and a replay action.
-3. **ASK KAVACH** — send questions to the Module 10 assistant. Returned event
-   references retain their real timestamps and can create or replay evidence
-   clips.
-4. **ANALYTICS** — show event counts by behaviour, risk distribution, event
-   timeline, and merged repeat observations.
+1. **Overview** (was ANALYSE) — the reconstruction plate, what the record
+   contains, and the highest scoring findings. With a backend, select a local
+   upload or direct video URL, start analysis, and inspect metadata and
+   progress.
+2. **Findings** (was EVENTS) — filter stored incidents by behaviour, risk and
+   signal class. Each finding exposes its score components, measured evidence,
+   prevention rule, review state, and a replay action.
+3. **Ask** (was ASK KAVACH) — send questions to the Module 10 assistant.
+   Returned event references retain their real timestamps and can create or
+   replay evidence clips. Without a backend the surface still answers a fixed
+   set of questions by deterministic retrieval over the loaded record, and
+   states that no text was generated.
+4. **Analysis** (was ANALYTICS) — event counts by behaviour, risk
+   distribution, and the entities the findings name.
+
+## Data source
+
+The workspace does not know whether it is talking to the API or reading the
+committed dataset. It asks a source object for records and for whether a
+capability is available; a capability the current source cannot provide is
+explained at the control rather than failing when pressed. Both paths are
+shaped by `kavach/presentation.py`, so the two cannot describe the same event
+differently. See the Website section of the README.
 
 ## Architecture
 
@@ -97,9 +113,9 @@ reused if already present.
 5. Press **Analyse video** and watch the job progress.
 6. Review the processed video, metadata, tracks, and events.
 7. Use **EVENTS** for filtering, evidence detail, review status, and replay.
-8. Use **ASK KAVACH** for evidence-grounded search or explanations; click a
+8. Use **Ask** for evidence-grounded search or explanations; click a
    returned reference to load its replay into the player.
-9. Use **ANALYTICS** for compact stored-event summaries and the evidence graph.
+9. Use **Analysis** for compact stored-event summaries and entity relations.
 
 The exact commands are in `docs/WEB_APP.md`. The Streamlit fallback follows
 the same source and analysis flow.

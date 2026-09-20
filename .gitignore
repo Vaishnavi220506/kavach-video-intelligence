@@ -79,4 +79,5 @@ runs/mvp/person_carton_v3_expanded/weights/
 .impeccable/hook.cache.json
 .impeccable/questions/
 .impeccable/mocks/
+.impeccable/review/
 .impeccable/config.local.json

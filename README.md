@@ -5,6 +5,7 @@
 ![Ultralytics](https://img.shields.io/badge/Ultralytics-YOLO11-F7931E)
 ![React](https://img.shields.io/badge/React-supervisor%20website-61DAFB)
 ![License](https://img.shields.io/badge/license-MIT-green)
+[![CI](https://github.com/Vaishnavi220506/kavach-video-intelligence/actions/workflows/ci.yml/badge.svg)](https://github.com/Vaishnavi220506/kavach-video-intelligence/actions/workflows/ci.yml)
 
 KAVACH is a local, explainable video-intelligence prototype for warehouse and
 other physical operations. It turns video into structured observations,
@@ -13,10 +14,18 @@ geometry-derived relationships, temporal behaviour events, transparent risk
 and incident records, evidence replay clips, and grounded natural-language
 search.
 
-The website currently runs locally because video processing, SQLite storage,
-YOLO inference, and Ollama require a backend runtime. GitHub hosts the source,
-documentation, evaluation reports, and reproducible setup; it is not being
-presented as a hosted production service.
+The [published site](https://forklift-safety-ai.vercel.app/) is a static
+bundle with no backend. It reads a committed dataset whose events, risk
+scores, component breakdowns, evidence readings and prevention rules were all
+produced by the real KAVACH engines from scripted trajectories; only the input
+is synthetic, and detection is not part of it. Regenerate it at any time with
+`python scripts/build_demo_dataset.py`, which CI checks still reproduces
+byte-for-byte.
+
+Analysing your own video needs the local runtime: OpenCV decoding, YOLO
+inference, SQLite storage, and Ollama for grounded explanations. The same
+build connects to the real pipeline when the FastAPI service is running, so
+the site and the workspace are one application, not a mock and a product.
 
 ## What problem does it explore?
 
@@ -30,17 +39,27 @@ but it is not responsible for deciding what happened in the footage.
 
 ## Demo
 
-Run the local React website and use the four sections:
+The site has two surfaces. The **record** states what the system does, what
+is measured, and what each measurement is worth, with a worked risk breakdown
+taken from a real row rather than an illustration. The **workspace** keeps the
+four working sections:
 
-1. **ANALYSE** — upload a local video or provide a direct HTTP(S) video URL;
-   inspect metadata, progress, tracked objects, events, and the processed
-   video.
-2. **EVENTS** — filter stored incidents by behaviour, risk, time, or entity;
-   generate and replay short evidence clips.
-3. **ASK KAVACH** — ask grounded questions such as “show all dragging
-   incidents” or “why was Event #32 considered high risk?”
-4. **ANALYTICS** — inspect behaviour counts, risk distribution, timeline, and
-   the evidence graph.
+1. **Overview** — the reconstruction plate, what the record contains, and the
+   highest scoring findings. With a local backend, upload a video or give a
+   direct HTTP(S) URL and run the pipeline.
+2. **Findings** — filter by behaviour, risk or signal class; open any finding
+   to read its score components, measured evidence, prevention rule and review
+   state. With a local backend, generate and replay short evidence clips.
+3. **Ask** — grounded questions such as “show every dragging finding” or
+   “which finding scored highest, and why?”. Retrieval is deterministic and
+   runs first; the local model only phrases what was retrieved. Without a
+   backend the site still answers the retrieval half and says plainly that no
+   prose was generated.
+4. **Analysis** — behaviour and risk distributions, and the entities the
+   findings name.
+
+Risk severity prints as a four-segment scale rather than relying on colour, so
+a reading survives greyscale, colour-blind viewing and a monochrome printout.
 
 ## Architecture
 
@@ -128,6 +147,33 @@ class node_assistant,node_query_router,node_supervisor,node_video_source,node_ol
 
 Detailed interfaces are documented in
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
+## Website
+
+One React bundle serves both surfaces and both situations. On load it probes
+`/api/health` and checks the response is genuinely the KAVACH service, because
+a static host answers any unknown path with `index.html` and a 200. If the
+service answers it uses the live pipeline; otherwise it falls back to the
+committed dataset.
+
+`kavach/presentation.py` is the single definition of the client-facing
+evidence contract. The FastAPI service shapes its responses with it, and
+`scripts/build_demo_dataset.py` generates the static fixtures with it, so the
+published record and the live service cannot drift into describing the same
+event differently. `tests/test_presentation.py` covers that contract and CI
+regenerates the fixtures on every push to prove they still reproduce.
+
+Capabilities the static build genuinely cannot provide — uploading, analysing,
+cutting evidence clips, generating prose — are stated at the control that
+would perform them rather than failing when pressed.
+
+| Script | Purpose |
+|---|---|
+| `scripts/build_demo_dataset.py` | Regenerate the committed demo fixtures by running the real engines over the scripted trajectories. Deterministic. |
+| `scripts/fetch_fonts.py` | Re-download the self-hosted latin subsets and regenerate `frontend/public/fonts/fonts.css`. All three families are OFL-1.1; see `frontend/public/fonts/OFL.txt`. |
+
+Durable design decisions are recorded in [`DESIGN.md`](DESIGN.md), and the
+product record future work must preserve is in [`PRODUCT.md`](PRODUCT.md).
 
 ## Implemented features
 

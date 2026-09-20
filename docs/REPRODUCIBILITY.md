@@ -133,7 +133,7 @@ and fallback:
 streamlit run app/streamlit/app.py
 ```
 
-Use the **ANALYSE** tab, select an upload or direct video URL, and explicitly
+Use the **Overview** section, select an upload or direct video URL, and explicitly
 press **Analyse video**. The bundled sample is at
 `data/videos/sample_warehouse.mp4` when the sample asset is present.
 
