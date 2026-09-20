@@ -2,13 +2,18 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable
 import math
+from collections.abc import Iterable
 
 from ..intelligence.motion import MotionError, calculate_motion
 from ._utils import get_motion, nearby_entity, node_class, object_nodes
-from .base import BehaviourCandidate, BehaviourContext, BehaviourDetector, BehaviourError, class_names
-
+from .base import (
+    BehaviourCandidate,
+    BehaviourContext,
+    BehaviourDetector,
+    BehaviourError,
+    class_names,
+)
 
 POSSIBLE_ROUGH_HANDLING = "POSSIBLE_ROUGH_HANDLING"
 

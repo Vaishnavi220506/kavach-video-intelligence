@@ -2,19 +2,18 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
 import math
 import re
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass
 
 import cv2
 import numpy as np
 
 from ..behaviours.base import BehaviourEvent
-from ..intelligence.relationships import object_node_id, zone_node_id
+from ..intelligence.relationships import object_node_id
 from ..intelligence.zones import ZoneManager
 from ..perception.tracker import TrackedObject
-
 
 ANOMALY_COLOR = (55, 85, 235)  # BGR: clear red
 SAFETY_COLOR = (20, 145, 245)  # BGR: orange-red
@@ -407,7 +406,7 @@ def draw_explainable_overlays(
     entity_to_color: dict[str, tuple[int, int, int]] = {}
     event_entities: set[str] = set()
     zone_entities: set[str] = set()
-    for event, explanation in zip(events, event_explanations):
+    for event, explanation in zip(events, event_explanations, strict=False):
         # Activity and zone-transition signals are useful context, but they
         # are not violations. Keep them in the banner when no safety signal
         # exists, without covering the frame with extra blue circles/labels.

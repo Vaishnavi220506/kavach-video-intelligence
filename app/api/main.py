@@ -8,11 +8,11 @@ frontend-facing shape for the stored evidence.
 
 from __future__ import annotations
 
-from concurrent.futures import ThreadPoolExecutor
 import json
-from pathlib import Path
 import sys
 import threading
+from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, File, HTTPException, Query, UploadFile
@@ -27,18 +27,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from kavach.assistant import GroundedAssistant, OllamaClient, OllamaError
-from kavach.behaviours import (
-    AISLE_OBSTRUCTION,
-    COLLISION_RISK,
-    IMPROPER_PLACEMENT,
-    MOTION_ANOMALY,
-    OBJECT_ACTIVITY,
-    POSSIBLE_ROUGH_HANDLING,
-    POSSIBLE_THROWING,
-    ZONE_TRANSITION,
-)
 from kavach.dashboard import (
-    DashboardAnalysisResult,
     analyse_video,
     download_video_url,
     persist_uploaded_video,
@@ -47,10 +36,15 @@ from kavach.dashboard import (
 from kavach.incidents import EvidenceReplay, EvidenceStore, ReplayError
 from kavach.perception import ModelLoadError, WarehouseDetector
 from kavach.perception.classes import WAREHOUSE_VOCABULARY
+from kavach.presentation import (
+    ANOMALY_SCOPE_NOTE,
+    MODEL_SCOPE_NOTE,
+    SUPPORTED_BEHAVIOURS,
+    event_payload,
+    evidence_graph,
+)
 from kavach.storage import DatabaseError, EventDatabase
 from kavach.video import VideoError, VideoReader
-from kavach.assistant.retrieval import format_timestamp
-
 
 OUTPUT_ROOT = PROJECT_ROOT / "outputs"
 SOURCE_DIRECTORY = OUTPUT_ROOT / "sources"
@@ -59,27 +53,6 @@ CLIP_DIRECTORY = OUTPUT_ROOT / "clips"
 EVIDENCE_DIRECTORY = OUTPUT_ROOT / "evidence" / "snapshots"
 DATABASE_PATH = OUTPUT_ROOT / "kavach.sqlite3"
 FRONTEND_DIST = PROJECT_ROOT / "frontend" / "dist"
-
-ACTIVITY_EVENT_TYPES = frozenset({ZONE_TRANSITION, OBJECT_ACTIVITY})
-ANOMALY_EVENT_TYPES = frozenset({MOTION_ANOMALY})
-SAFETY_EVENT_TYPES = frozenset(
-    {
-        "ZONE_VIOLATION",
-        "POSSIBLE_DRAGGING",
-        "POSSIBLE_DROP",
-        "PALLET_OVERHANG",
-        "UNSTABLE_STACK",
-        "UNSAFE_HUMAN_FORKLIFT_PROXIMITY",
-        POSSIBLE_THROWING,
-        POSSIBLE_ROUGH_HANDLING,
-        AISLE_OBSTRUCTION,
-        IMPROPER_PLACEMENT,
-        COLLISION_RISK,
-    }
-)
-SUPPORTED_BEHAVIOURS = tuple(
-    sorted(ACTIVITY_EVENT_TYPES | ANOMALY_EVENT_TYPES | SAFETY_EVENT_TYPES)
-)
 
 database = EventDatabase(DATABASE_PATH)
 replay = EvidenceReplay(database, output_dir=CLIP_DIRECTORY)
@@ -212,93 +185,6 @@ def _model_options() -> list[dict[str, object]]:
     ]
 
 
-def _event_payload(event: dict[str, object]) -> dict[str, object]:
-    payload = dict(event)
-    timestamp = float(payload.get("timestamp", 0.0))
-    payload["timestamp"] = timestamp
-    payload["timestamp_display"] = format_timestamp(timestamp)
-    event_id = str(payload.get("event_id", ""))
-    payload["replay_url"] = f"/api/events/{event_id}/replay"
-    payload["clip_url"] = (
-        f"/api/events/{event_id}/clip" if event_id else None
-    )
-    behaviour = str(payload.get("behaviour", ""))
-    if behaviour in ACTIVITY_EVENT_TYPES:
-        payload["signal_kind"] = "activity"
-    elif behaviour in ANOMALY_EVENT_TYPES:
-        payload["signal_kind"] = "anomaly"
-    else:
-        payload["signal_kind"] = "safety"
-    raw_evidence = payload.get("evidence")
-    evidence_summary: dict[str, object] = {}
-    if isinstance(raw_evidence, dict):
-        for candidate_key in ("latest_event", "initial_event"):
-            candidate = raw_evidence.get(candidate_key)
-            if isinstance(candidate, dict) and isinstance(candidate.get("evidence"), dict):
-                evidence_summary = dict(candidate["evidence"])
-                break
-        if not evidence_summary:
-            evidence_summary = dict(raw_evidence)
-    payload["evidence_summary"] = evidence_summary
-    artifacts: list[dict[str, object]] = []
-    if isinstance(raw_evidence, dict):
-        raw_artifacts = raw_evidence.get("evidence_artifacts")
-        if isinstance(raw_artifacts, list):
-            for index, artifact in enumerate(raw_artifacts):
-                if not isinstance(artifact, dict):
-                    continue
-                item = dict(artifact)
-                item["url"] = f"/api/events/{event_id}/snapshot/{index}"
-                item["verified"] = EvidenceStore.verify(item)
-                artifacts.append(item)
-    payload["evidence_artifacts"] = artifacts
-    payload["prevention"] = raw_evidence.get("prevention", []) if isinstance(raw_evidence, dict) else []
-    payload["root_cause_category"] = raw_evidence.get("root_cause_category") if isinstance(raw_evidence, dict) else None
-    return payload
-
-
-def _evidence_graph(events: list[dict[str, object]]) -> dict[str, object]:
-    """Build a transparent entity→incident graph from stored event evidence.
-
-    This is deliberately not presented as a persisted frame-level scene graph;
-    Module 6 graph snapshots are in-memory. The web graph only visualizes the
-    relationships explicitly retained in SQLite incident records.
-    """
-
-    nodes: dict[str, dict[str, object]] = {}
-    edges: list[dict[str, object]] = []
-    for event in events:
-        event_id = str(event.get("event_id", "event"))
-        risk = event.get("risk") if isinstance(event.get("risk"), dict) else {}
-        event_node = f"event:{event_id}"
-        nodes[event_node] = {
-            "id": event_node,
-            "label": str(event.get("behaviour", "Event")).replace("_", " "),
-            "kind": "incident",
-            "risk": str(risk.get("category", "UNKNOWN")),
-            "timestamp": float(event.get("timestamp", 0.0)),
-        }
-        for raw_entity in event.get("entities", []):
-            entity = str(raw_entity)
-            entity_node = f"entity:{entity}"
-            nodes.setdefault(
-                entity_node,
-                {
-                    "id": entity_node,
-                    "label": entity.replace("_", " "),
-                    "kind": "entity",
-                },
-            )
-            edges.append(
-                {
-                    "source": entity_node,
-                    "target": event_node,
-                    "label": "involved in",
-                }
-            )
-    return {"nodes": list(nodes.values()), "edges": edges}
-
-
 def _video_summary(video: dict[str, object]) -> dict[str, object]:
     video_id = str(video["video_id"])
     output = _processed_path(video_id)
@@ -328,24 +214,16 @@ def _video_summary(video: dict[str, object]) -> dict[str, object]:
 
 def _video_payload(video_id: str) -> dict[str, object]:
     video = _video_or_404(video_id)
-    events = [_event_payload(item) for item in database.get_events(video_id)]
+    events = [event_payload(item) for item in database.get_events(video_id)]
     stats = database.get_event_statistics(video_id)
     payload: dict[str, object] = {
         **_video_summary(video),
         "events": events,
         "statistics": stats,
-        "graph": _evidence_graph(events),
+        "graph": evidence_graph(events),
         "supported_behaviours": list(SUPPORTED_BEHAVIOURS),
-        "model_scope_note": (
-            "The default model detects only classes present in its trained "
-            "vocabulary. Warehouse labels such as forklift or carton are not "
-            "claimed unless the selected weights actually expose them."
-        ),
-        "anomaly_scope_note": (
-            "MOTION_ANOMALY is an explainable image-space novelty signal based "
-            "on tracked speed and direction changes; it is not a learned "
-            "damage or defect classifier."
-        ),
+        "model_scope_note": MODEL_SCOPE_NOTE,
+        "anomaly_scope_note": ANOMALY_SCOPE_NOTE,
         "model_options": _model_options(),
     }
     with _jobs_lock:
@@ -675,13 +553,13 @@ def query_events(
             continue
         if end is not None and timestamp > end:
             continue
-        filtered.append(_event_payload(event))
+        filtered.append(event_payload(event))
     return {"events": filtered, "total": len(filtered)}
 
 
 @app.get("/api/events/{event_id}")
 def get_event(event_id: str) -> dict[str, object]:
-    return _event_payload(_event_or_404(event_id))
+    return event_payload(_event_or_404(event_id))
 
 
 @app.post("/api/events/{event_id}/replay")
@@ -744,13 +622,13 @@ def review_queue(video_id: str | None = None) -> dict[str, object]:
             for event in database.get_events(str(selected_id))
             if event.get("review_status") == "NEW"
         )
-    return {"events": [_event_payload(event) for event in events], "total": len(events)}
+    return {"events": [event_payload(event) for event in events], "total": len(events)}
 
 
 @app.post("/api/events/{event_id}/review")
 def update_review(event_id: str, request: ReviewRequest) -> dict[str, object]:
     try:
-        return _event_payload(database.update_review_status(event_id, request.status))
+        return event_payload(database.update_review_status(event_id, request.status))
     except DatabaseError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 

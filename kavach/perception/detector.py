@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
+import time
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from pathlib import Path
-import time
 from typing import Any
 
 import numpy as np
@@ -19,7 +19,6 @@ from .classes import (
     model_class_names,
     normalize_class_name,
 )
-
 
 BoundingBox = tuple[float, float, float, float]
 Point = tuple[float, float]
@@ -147,7 +146,7 @@ class WarehouseDetector:
         vocabulary: Iterable[str] = WAREHOUSE_VOCABULARY,
         confidence: float = 0.25,
         device: str | None = None,
-    ) -> "WarehouseDetector":
+    ) -> WarehouseDetector:
         """Create an optional YOLO-World detector with explicit text prompts.
 
         YOLO-World needs an additional CLIP text encoder and its weights. It
@@ -220,7 +219,7 @@ class WarehouseDetector:
         class_ids = _as_numpy(getattr(boxes, "cls", np.empty(0))).reshape(-1)
         detections: list[Detection] = []
 
-        for box, confidence, class_id in zip(xyxy, confidences, class_ids):
+        for box, confidence, class_id in zip(xyxy, confidences, class_ids, strict=False):
             numeric_class_id = int(class_id)
             class_name = self._names.get(numeric_class_id, str(numeric_class_id))
             if self._filter_enabled and normalize_class_name(class_name) not in self._allowed_class_names:

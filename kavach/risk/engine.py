@@ -7,15 +7,14 @@ inspectable policy score.
 
 from __future__ import annotations
 
+import math
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
-import math
 from numbers import Real
 from pathlib import Path
 from typing import TypeAlias
 
 from ..behaviours.base import BehaviourEvent
-
 
 CONFIG_PATH = Path(__file__).with_name("config.yaml")
 
@@ -275,7 +274,7 @@ class RiskConfig:
         )
 
     @classmethod
-    def from_mapping(cls, payload: Mapping[str, object]) -> "RiskConfig":
+    def from_mapping(cls, payload: Mapping[str, object]) -> RiskConfig:
         """Build a validated policy from the YAML-shaped mapping."""
 
         scoring = payload.get("scoring", {})
@@ -357,7 +356,7 @@ class RiskEngine:
         self.config = config
 
     @classmethod
-    def from_config(cls, path: str | Path = CONFIG_PATH) -> "RiskEngine":
+    def from_config(cls, path: str | Path = CONFIG_PATH) -> RiskEngine:
         """Build an engine from a YAML file."""
 
         return cls(RiskConfig.from_mapping(load_config(path)))

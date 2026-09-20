@@ -2,19 +2,17 @@
 
 from __future__ import annotations
 
+import json
+import math
+import sqlite3
+import threading
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from datetime import datetime, timezone
-import json
-import math
 from pathlib import Path
-import sqlite3
-import threading
-from typing import Any
 
 from ..incidents.models import Incident
 from ..risk import RISK_CATEGORIES
-
 
 SCHEMA_PATH = Path(__file__).with_name("schema.sql")
 DEFAULT_DATABASE_PATH = Path("outputs") / "kavach.sqlite3"
@@ -724,7 +722,7 @@ class EventDatabase:
                 self._connection.close()
                 self._closed = True
 
-    def __enter__(self) -> "EventDatabase":
+    def __enter__(self) -> EventDatabase:
         self._ensure_open()
         return self
 

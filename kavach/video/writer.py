@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import math
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -118,7 +118,7 @@ class VideoWriter:
             self._writer.release()
             self._closed = True
 
-    def __enter__(self) -> "VideoWriter":
+    def __enter__(self) -> VideoWriter:
         return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> None:

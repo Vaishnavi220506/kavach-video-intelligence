@@ -1,0 +1,145 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+jobs:
+  tests:
+    name: Python tests (${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install CPU-only torch first
+        # The default PyPI wheels pull the full CUDA stack, which costs several
+        # gigabytes and minutes on a runner that has no GPU. Installing the CPU
+        # build up front means the requirements install below finds torch
+        # already satisfied.
+        run: |
+          python -m pip install --upgrade pip
+          pip install --index-url https://download.pytorch.org/whl/cpu \
+            torch==2.9.1 torchvision==0.24.1
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run test suite
+        run: python -m pytest tests/ -q
+
+  evaluation:
+    name: Reproduce controlled evaluation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install CPU-only torch first
+        run: |
+          python -m pip install --upgrade pip
+          pip install --index-url https://download.pytorch.org/whl/cpu \
+            torch==2.9.1 torchvision==0.24.1
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Re-run the 22-case controlled evaluation
+        # Guards the claim in the README: every designed behaviour case still
+        # reproduces. A threshold change that breaks a rule fails here rather
+        # than silently invalidating the committed report.
+        run: |
+          python evaluation/run_controlled_evaluation.py \
+            --output /tmp/controlled_evaluation.json
+          python - <<'PY'
+          import json
+          import sys
+
+          fresh = json.load(open("/tmp/controlled_evaluation.json"))
+          committed = json.load(open("reports/controlled_evaluation.json"))
+
+          if fresh["case_results"] != committed["case_results"]:
+              print("Controlled evaluation no longer matches reports/controlled_evaluation.json")
+              sys.exit(1)
+
+          mismatched = [
+              case["id"] for case in fresh["case_results"] if not case["match"]
+          ]
+          if mismatched:
+              print(f"Cases no longer reproduce: {mismatched}")
+              sys.exit(1)
+
+          print(f"All {fresh['case_count']} controlled cases reproduce.")
+          PY
+
+      - name: Verify the committed demo dataset is reproducible
+        # The published site ships generated fixtures. Regenerating them here
+        # proves they are real engine output and stay in step with the
+        # behaviour, risk and prevention code rather than drifting into
+        # hand-maintained sample data.
+        run: |
+          python scripts/build_demo_dataset.py --output /tmp/demo
+          python - <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          def load(path):
+              return json.loads(Path(path).read_text(encoding="utf-8"))
+
+          drift = []
+          for name in ("video.json", "tracks.json", "meta.json"):
+              fresh = load(Path("/tmp/demo") / name)
+              committed = load(Path("frontend/public/demo") / name)
+              if fresh != committed:
+                  drift.append(name)
+
+          if drift:
+              print(f"Demo fixtures are stale: {drift}")
+              print("Run: python scripts/build_demo_dataset.py")
+              sys.exit(1)
+
+          print("Demo fixtures reproduce exactly.")
+          PY
+
+  frontend:
+    name: Frontend build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build
+        working-directory: frontend
+        run: npm run build

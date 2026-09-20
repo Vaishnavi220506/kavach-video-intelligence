@@ -14,7 +14,6 @@ from .base import (
     class_names,
 )
 
-
 POSSIBLE_DROP = "POSSIBLE_DROP"
 
 
@@ -73,7 +72,7 @@ class PossibleDropDetector(BehaviourDetector):
         node_id: str,
     ) -> tuple[bool, str | None, str | None]:
         snapshots = context.scene_graph.snapshots
-        for previous, current in zip(snapshots, snapshots[1:]):
+        for previous, current in zip(snapshots, snapshots[1:], strict=False):
             previous_pairs = {
                 pair
                 for pair in self._snapshot_relations(previous, node_id)

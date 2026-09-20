@@ -14,7 +14,6 @@ from .base import (
     class_names,
 )
 
-
 ZONE_VIOLATION = "ZONE_VIOLATION"
 
 

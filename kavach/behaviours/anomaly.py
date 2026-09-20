@@ -7,8 +7,8 @@ classifier and cannot establish damage, intent, or a physical incident.
 
 from __future__ import annotations
 
-from collections.abc import Iterable
 import math
+from collections.abc import Iterable
 from statistics import median
 
 from ..intelligence.motion import MotionError, calculate_motion
@@ -20,7 +20,6 @@ from .base import (
     BehaviourError,
     class_names,
 )
-
 
 MOTION_ANOMALY = "MOTION_ANOMALY"
 
@@ -134,7 +133,7 @@ class MotionAnomalyDetector(BehaviourDetector):
             if len(recent) < self.minimum_history_states:
                 continue
             motions = []
-            for previous, current in zip(recent[:-1], recent[1:]):
+            for previous, current in zip(recent[:-1], recent[1:], strict=False):
                 try:
                     motions.append(calculate_motion(previous, current))
                 except MotionError:

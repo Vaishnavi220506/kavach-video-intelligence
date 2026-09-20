@@ -6,9 +6,14 @@ from collections.abc import Iterable
 
 from ..intelligence.geometry import bottom_center, euclidean_distance
 from ..intelligence.relationships import APPROACHING
-from ._utils import get_motion, node_class, object_nodes
-from .base import BehaviourCandidate, BehaviourContext, BehaviourDetector, BehaviourError, class_names
-
+from ._utils import node_class, object_nodes
+from .base import (
+    BehaviourCandidate,
+    BehaviourContext,
+    BehaviourDetector,
+    BehaviourError,
+    class_names,
+)
 
 COLLISION_RISK = "COLLISION_RISK"
 

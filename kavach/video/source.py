@@ -6,7 +6,6 @@ from os import PathLike
 from pathlib import Path
 from typing import TypeAlias
 
-
 VideoSource: TypeAlias = str | PathLike[str]
 
 

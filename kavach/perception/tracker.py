@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
+import math
+import os
 from collections.abc import Iterable, Sequence
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from types import SimpleNamespace
-import math
-import os
 from typing import Any
 
 import numpy as np
@@ -107,7 +107,7 @@ class _DetectionBatch:
     def __len__(self) -> int:
         return len(self.conf)
 
-    def __getitem__(self, index: Any) -> "_DetectionBatch":
+    def __getitem__(self, index: Any) -> _DetectionBatch:
         selected = object.__new__(_DetectionBatch)
         selected.xyxy = np.atleast_2d(self.xyxy[index]).astype(np.float32)
         selected.xywh = np.atleast_2d(self.xywh[index]).astype(np.float32)
@@ -307,7 +307,7 @@ class MultiObjectTracker:
                 pass
             self._runtime_config_path = None
 
-    def __enter__(self) -> "MultiObjectTracker":
+    def __enter__(self) -> MultiObjectTracker:
         return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> None:

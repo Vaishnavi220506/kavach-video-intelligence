@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable, Mapping, Sequence
-from dataclasses import dataclass
 import json
 import math
+from collections.abc import Callable, Mapping, Sequence
+from dataclasses import dataclass
 from time import monotonic
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
-
 
 DEFAULT_OLLAMA_HOST = "http://127.0.0.1:11434"
 DEFAULT_OLLAMA_MODEL = "llama3.2:3b"

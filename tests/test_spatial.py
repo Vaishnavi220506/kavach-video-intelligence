@@ -7,13 +7,13 @@ import unittest
 import numpy as np
 
 from kavach.intelligence import (
-    CalibrationError,
-    GeometryError,
-    GroundPlaneCalibration,
     LOADING_ZONE,
     PALLET_ZONE,
     RESTRICTED_ZONE,
     STAGING_ZONE,
+    CalibrationError,
+    GeometryError,
+    GroundPlaneCalibration,
     ZoneManager,
     bbox_center,
     bbox_intersection,
@@ -37,7 +37,6 @@ from kavach.intelligence import (
     validate_polygon,
     vertical_overlap,
 )
-
 
 BOX_A = (0.0, 0.0, 10.0, 10.0)
 BOX_B = (5.0, 5.0, 15.0, 15.0)

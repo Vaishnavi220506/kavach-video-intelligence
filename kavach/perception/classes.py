@@ -9,7 +9,6 @@ from __future__ import annotations
 
 from collections.abc import Iterable, Mapping
 
-
 # The desired warehouse vocabulary for future model evaluation. A prompt or a
 # configured class name alone does not establish detector accuracy.
 WAREHOUSE_VOCABULARY: tuple[str, ...] = (

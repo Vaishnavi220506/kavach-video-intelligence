@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+import json
 from collections.abc import Mapping
 from dataclasses import dataclass, field
-import json
 
 from ..storage import EventDatabase
 from .query_router import (
@@ -17,10 +17,8 @@ from .query_router import (
     REVIEW_TIMESTAMPS,
     STATISTICS,
     SUMMARY,
-    UNKNOWN,
     QueryIntent,
 )
-
 
 DEFAULT_OPERATIONAL_RULES = {
     "evidence_clip_window_seconds": {"before": 3.0, "after": 3.0},

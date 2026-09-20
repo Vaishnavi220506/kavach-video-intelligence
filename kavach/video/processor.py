@@ -13,7 +13,6 @@ from .reader import FramePacket, VideoReader
 from .source import VideoSource
 from .writer import VideoWriter, VideoWriterError
 
-
 FrameProcessor = Callable[[FramePacket], np.ndarray]
 
 

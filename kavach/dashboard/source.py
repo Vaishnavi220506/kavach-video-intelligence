@@ -6,15 +6,14 @@ not claim to download arbitrary web pages or video-platform URLs.
 
 from __future__ import annotations
 
-from hashlib import sha256
-from pathlib import Path
 import re
 import tempfile
+from hashlib import sha256
+from pathlib import Path
 from typing import BinaryIO
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
-
 
 MAX_VIDEO_BYTES = 1_073_741_824
 DOWNLOAD_TIMEOUT_SECONDS = 30.0

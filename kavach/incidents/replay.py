@@ -2,18 +2,17 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import math
-from pathlib import Path
 import re
+from dataclasses import dataclass
+from pathlib import Path
 
 import cv2
 
 from ..storage.database import EventDatabase, EventStorageError
-from .evidence import file_sha256
 from ..video.source import VideoError, resolve_video_source
 from ..video.writer import VideoWriter, VideoWriterError
-
+from .evidence import file_sha256
 
 DEFAULT_CLIP_DIRECTORY = Path("outputs") / "clips"
 

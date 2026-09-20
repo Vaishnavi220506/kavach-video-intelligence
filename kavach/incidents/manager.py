@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+import math
 from collections import deque
 from collections.abc import Iterable
-import math
 
 from ..behaviours.base import BehaviourEvent
 from ..risk.engine import RiskEngine
@@ -27,7 +27,7 @@ class IncidentManagerError(ValueError):
 class IncidentUpdate:
     """Result of ingesting an event, including whether it was deduplicated."""
 
-    __slots__ = ("incident", "created", "deduplicated")
+    __slots__ = ("created", "deduplicated", "incident")
 
     def __init__(
         self,

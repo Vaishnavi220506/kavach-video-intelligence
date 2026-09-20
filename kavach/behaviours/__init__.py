@@ -1,5 +1,13 @@
 """KAVACH explainable activity, anomaly, and temporal behaviour detectors."""
 
+from .activity import (
+    OBJECT_ACTIVITY,
+    ZONE_TRANSITION,
+    ObjectActivityDetector,
+    ZoneTransitionDetector,
+)
+from .aisle_obstruction import AISLE_OBSTRUCTION, AisleObstructionDetector
+from .anomaly import MOTION_ANOMALY, MotionAnomalyDetector
 from .base import (
     BehaviourCandidate,
     BehaviourContext,
@@ -7,24 +15,14 @@ from .base import (
     BehaviourError,
     BehaviourEvent,
 )
-from .dragging import DraggingDetector, POSSIBLE_DRAGGING
-from .drop import PossibleDropDetector, POSSIBLE_DROP
-from .activity import (
-    OBJECT_ACTIVITY,
-    ZONE_TRANSITION,
-    ObjectActivityDetector,
-    ZoneTransitionDetector,
-)
-from .anomaly import MOTION_ANOMALY, MotionAnomalyDetector
-from .throwing import POSSIBLE_THROWING, ThrowingDetector
-from .rough_handling import POSSIBLE_ROUGH_HANDLING, RoughHandlingDetector
-from .aisle_obstruction import AISLE_OBSTRUCTION, AisleObstructionDetector
-from .improper_placement import IMPROPER_PLACEMENT, ImproperPlacementDetector
 from .collision import COLLISION_RISK, CollisionRiskDetector
-from .overhang import OverhangDetector, PALLET_OVERHANG
+from .dragging import POSSIBLE_DRAGGING, DraggingDetector
+from .drop import POSSIBLE_DROP, PossibleDropDetector
+from .improper_placement import IMPROPER_PLACEMENT, ImproperPlacementDetector
+from .overhang import PALLET_OVERHANG, OverhangDetector
 from .proximity import (
-    HumanForkliftProximityDetector,
     UNSAFE_HUMAN_FORKLIFT_PROXIMITY,
+    HumanForkliftProximityDetector,
 )
 from .registry import (
     CONFIG_PATH,
@@ -33,25 +31,28 @@ from .registry import (
     build_default_registry,
     load_config,
 )
+from .rough_handling import POSSIBLE_ROUGH_HANDLING, RoughHandlingDetector
 from .stacking import UNSTABLE_STACK, UnstableStackDetector
+from .throwing import POSSIBLE_THROWING, ThrowingDetector
 from .zone_violation import ZONE_VIOLATION, ZoneViolationDetector
 
 __all__ = [
-    "CONFIG_PATH",
-    "MOTION_ANOMALY",
-    "POSSIBLE_THROWING",
-    "POSSIBLE_ROUGH_HANDLING",
     "AISLE_OBSTRUCTION",
-    "IMPROPER_PLACEMENT",
     "COLLISION_RISK",
+    "CONFIG_PATH",
+    "IMPROPER_PLACEMENT",
+    "MOTION_ANOMALY",
     "OBJECT_ACTIVITY",
-    "POSSIBLE_DROP",
-    "POSSIBLE_DRAGGING",
     "PALLET_OVERHANG",
+    "POSSIBLE_DRAGGING",
+    "POSSIBLE_DROP",
+    "POSSIBLE_ROUGH_HANDLING",
+    "POSSIBLE_THROWING",
     "UNSAFE_HUMAN_FORKLIFT_PROXIMITY",
     "UNSTABLE_STACK",
-    "ZONE_VIOLATION",
     "ZONE_TRANSITION",
+    "ZONE_VIOLATION",
+    "AisleObstructionDetector",
     "BehaviourCandidate",
     "BehaviourConfigurationError",
     "BehaviourContext",
@@ -59,20 +60,19 @@ __all__ = [
     "BehaviourError",
     "BehaviourEvent",
     "BehaviourRegistry",
-    "DraggingDetector",
-    "MotionAnomalyDetector",
-    "ThrowingDetector",
-    "RoughHandlingDetector",
-    "AisleObstructionDetector",
-    "ImproperPlacementDetector",
     "CollisionRiskDetector",
-    "ObjectActivityDetector",
+    "DraggingDetector",
     "HumanForkliftProximityDetector",
+    "ImproperPlacementDetector",
+    "MotionAnomalyDetector",
+    "ObjectActivityDetector",
     "OverhangDetector",
     "PossibleDropDetector",
+    "RoughHandlingDetector",
+    "ThrowingDetector",
     "UnstableStackDetector",
-    "ZoneViolationDetector",
     "ZoneTransitionDetector",
+    "ZoneViolationDetector",
     "build_default_registry",
     "load_config",
 ]

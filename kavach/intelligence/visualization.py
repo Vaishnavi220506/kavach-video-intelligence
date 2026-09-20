@@ -10,7 +10,6 @@ import numpy as np
 from .geometry import (
     bbox_center,
     euclidean_distance,
-    horizontal_overlap,
     support_ratio,
     validate_bbox,
 )
@@ -39,7 +38,7 @@ def draw_trajectory(
         for x, y in trajectory
     ]
     annotated = frame.copy()
-    for start, end in zip(points, points[1:]):
+    for start, end in zip(points, points[1:], strict=False):
         cv2.line(annotated, start, end, color, thickness, cv2.LINE_AA)
     for point in points:
         cv2.circle(annotated, point, point_radius, color, -1, cv2.LINE_AA)

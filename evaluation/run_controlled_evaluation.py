@@ -9,13 +9,12 @@ from typing import Any
 
 from kavach.behaviours import BehaviourContext, build_default_registry
 from kavach.intelligence import (
-    ObjectMemory,
     RESTRICTED_ZONE,
+    ObjectMemory,
     SceneGraph,
     ZoneManager,
 )
 from kavach.perception import TrackedObject
-
 
 FRAME_WIDTH = 200
 FRAME_HEIGHT = 1000

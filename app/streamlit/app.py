@@ -7,12 +7,12 @@ under ``kavach/`` and are reused without dashboard-specific copies.
 
 from __future__ import annotations
 
-from collections.abc import Mapping
 import hashlib
 import json
-from pathlib import Path
 import sys
 import tempfile
+from collections.abc import Mapping
+from pathlib import Path
 
 import cv2
 import streamlit as st
@@ -37,8 +37,7 @@ from kavach.dashboard import (
 from kavach.incidents import EvidenceReplay, ReplayError
 from kavach.perception import ModelLoadError, WarehouseDetector
 from kavach.storage import DatabaseError, EventDatabase
-from kavach.video import VideoError, VideoReader
-
+from kavach.video import VideoError
 
 APP_ROOT = Path(__file__).resolve().parents[2]
 DATABASE_PATH = APP_ROOT / "outputs" / "kavach.sqlite3"

@@ -5,8 +5,13 @@ from __future__ import annotations
 from collections.abc import Iterable
 
 from ._utils import get_motion, is_near_floor, nearby_entity, node_class, object_nodes
-from .base import BehaviourCandidate, BehaviourContext, BehaviourDetector, BehaviourError, class_names
-
+from .base import (
+    BehaviourCandidate,
+    BehaviourContext,
+    BehaviourDetector,
+    BehaviourError,
+    class_names,
+)
 
 POSSIBLE_THROWING = "POSSIBLE_THROWING"
 

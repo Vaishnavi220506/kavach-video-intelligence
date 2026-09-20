@@ -7,16 +7,16 @@ an annotation produced by a generic model is not a reliable ground truth.
 
 from __future__ import annotations
 
-from collections import Counter
-from dataclasses import dataclass
 import math
+from collections import Counter
+from collections.abc import Iterable, Mapping
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Iterable, Mapping
+from typing import Any
 
 import yaml
 
 from .classes import WAREHOUSE_TRAINING_CLASSES, normalize_class_name
-
 
 IMAGE_EXTENSIONS = frozenset({".jpg", ".jpeg", ".png", ".bmp", ".webp"})
 
@@ -399,8 +399,8 @@ def validate_yolo_dataset(
 
 
 __all__ = [
+    "IMAGE_EXTENSIONS",
     "DatasetIssue",
     "DatasetReport",
-    "IMAGE_EXTENSIONS",
     "validate_yolo_dataset",
 ]

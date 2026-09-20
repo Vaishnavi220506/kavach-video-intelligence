@@ -19,7 +19,7 @@ class _TensorLike:
     def __init__(self, value: object) -> None:
         self.value = np.asarray(value)
 
-    def cpu(self) -> "_TensorLike":
+    def cpu(self) -> _TensorLike:
         return self
 
     def numpy(self) -> np.ndarray:

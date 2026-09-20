@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import math
+from collections.abc import Iterator
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterator
 
 import cv2
 import numpy as np
@@ -188,7 +188,7 @@ class VideoReader:
             self._capture.release()
             self._closed = True
 
-    def __enter__(self) -> "VideoReader":
+    def __enter__(self) -> VideoReader:
         return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> None:

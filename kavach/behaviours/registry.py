@@ -5,19 +5,19 @@ from __future__ import annotations
 from collections.abc import Iterable, Mapping
 from pathlib import Path
 
+from .activity import ObjectActivityDetector, ZoneTransitionDetector
+from .aisle_obstruction import AisleObstructionDetector
+from .anomaly import MotionAnomalyDetector
 from .base import BehaviourContext, BehaviourDetector, BehaviourError, BehaviourEvent
+from .collision import CollisionRiskDetector
 from .dragging import DraggingDetector
 from .drop import PossibleDropDetector
-from .activity import ObjectActivityDetector, ZoneTransitionDetector
-from .anomaly import MotionAnomalyDetector
-from .throwing import ThrowingDetector
-from .rough_handling import RoughHandlingDetector
-from .aisle_obstruction import AisleObstructionDetector
 from .improper_placement import ImproperPlacementDetector
-from .collision import CollisionRiskDetector
 from .overhang import OverhangDetector
 from .proximity import HumanForkliftProximityDetector
+from .rough_handling import RoughHandlingDetector
 from .stacking import UnstableStackDetector
+from .throwing import ThrowingDetector
 from .zone_violation import ZoneViolationDetector
 
 

@@ -14,7 +14,6 @@ from .base import (
     class_names,
 )
 
-
 PALLET_OVERHANG = "PALLET_OVERHANG"
 
 

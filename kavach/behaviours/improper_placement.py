@@ -5,8 +5,13 @@ from __future__ import annotations
 from collections.abc import Iterable
 
 from ._utils import node_class, object_nodes
-from .base import BehaviourCandidate, BehaviourContext, BehaviourDetector, BehaviourError, class_names
-
+from .base import (
+    BehaviourCandidate,
+    BehaviourContext,
+    BehaviourDetector,
+    BehaviourError,
+    class_names,
+)
 
 IMPROPER_PLACEMENT = "IMPROPER_PLACEMENT"
 

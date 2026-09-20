@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
+import time
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import asdict, dataclass
 from pathlib import Path
-import time
 
 import cv2
 import numpy as np
@@ -13,13 +13,13 @@ import numpy as np
 from ..behaviours import BehaviourContext, BehaviourEvent, build_default_registry
 from ..incidents import EvidenceStore, IncidentManager
 from ..intelligence import (
+    LOADING_ZONE,
+    PALLET_ZONE,
+    RESTRICTED_ZONE,
+    STAGING_ZONE,
     ObjectMemory,
     SceneGraph,
     ZoneManager,
-    STAGING_ZONE,
-    LOADING_ZONE,
-    RESTRICTED_ZONE,
-    PALLET_ZONE,
     draw_zones,
 )
 from ..perception import MultiObjectTracker, TrackedObject, WarehouseDetector, draw_tracked_objects
@@ -28,7 +28,6 @@ from ..risk import RiskEngine
 from ..storage import EventDatabase
 from ..video import FramePacket, VideoReader, VideoWriter
 from .overlays import draw_explainable_overlays
-
 
 ProgressCallback = Callable[
     [float, np.ndarray, FramePacket, Sequence[TrackedObject], Sequence[BehaviourEvent]],

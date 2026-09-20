@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
+import math
 from collections import deque
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
-import math
 
 from ..perception.tracker import TrackedObject
-from .motion import MotionEstimate, MotionError, calculate_motion
+from .motion import MotionError, MotionEstimate, calculate_motion
 
 
 class ObjectMemoryError(RuntimeError):

@@ -6,13 +6,11 @@ from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 
 from .geometry import (
-    Point,
     Polygon,
     distance_to_region,
     point_inside_polygon,
     validate_polygon,
 )
-
 
 STAGING_ZONE = "STAGING_ZONE"
 LOADING_ZONE = "LOADING_ZONE"
@@ -71,7 +69,7 @@ class ZoneManager:
     def from_config(
         cls,
         config: Mapping[str, Mapping[str, object] | Sequence[Sequence[float]]],
-    ) -> "ZoneManager":
+    ) -> ZoneManager:
         """Build zones from JSON-like polygon or polygon/color configuration."""
 
         manager = cls()

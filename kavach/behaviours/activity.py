@@ -11,7 +11,7 @@ from __future__ import annotations
 from collections.abc import Iterable
 
 from ..intelligence.geometry import bottom_center
-from ..intelligence.motion import MotionError, calculate_motion
+from ..intelligence.motion import MotionError
 from ..intelligence.relationships import INSIDE_ZONE
 from ..intelligence.scene_graph import SceneNode
 from .base import (
@@ -21,7 +21,6 @@ from .base import (
     BehaviourError,
     class_names,
 )
-
 
 ZONE_TRANSITION = "ZONE_TRANSITION"
 OBJECT_ACTIVITY = "OBJECT_ACTIVITY"

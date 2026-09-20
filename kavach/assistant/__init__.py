@@ -32,14 +32,18 @@ from .retrieval import (
 )
 
 __all__ = [
-    "AssistantResponse",
-    "AssistantError",
     "EVENTS_AROUND_TIME",
     "EVENTS_BY_ENTITY",
     "EVENTS_BY_RISK",
     "EVENTS_BY_TYPE",
     "EVENT_BY_ID",
     "EVENT_EXPLANATION",
+    "REVIEW_TIMESTAMPS",
+    "STATISTICS",
+    "SUMMARY",
+    "UNKNOWN",
+    "AssistantError",
+    "AssistantResponse",
     "GroundedAssistant",
     "OllamaBenchmark",
     "OllamaClient",
@@ -50,12 +54,8 @@ __all__ = [
     "QueryIntent",
     "QueryRouter",
     "QueryRouterError",
-    "REVIEW_TIMESTAMPS",
     "RetrievalError",
     "RetrievalResult",
     "RetrievalService",
-    "STATISTICS",
-    "SUMMARY",
-    "UNKNOWN",
     "format_timestamp",
 ]

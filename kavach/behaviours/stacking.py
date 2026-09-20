@@ -14,7 +14,6 @@ from .base import (
     class_names,
 )
 
-
 UNSTABLE_STACK = "UNSTABLE_STACK"
 
 

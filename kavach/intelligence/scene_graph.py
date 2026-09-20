@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
+import math
 from collections import deque
 from collections.abc import Iterable
 from dataclasses import asdict, dataclass
-import math
 
 from ..perception.tracker import TrackedObject
 from .object_memory import ObjectMemory, ObjectState
@@ -13,8 +13,8 @@ from .relationships import (
     INSIDE_ZONE,
     NEAR,
     RelationEdge,
-    RelationThresholds,
     RelationshipError,
+    RelationThresholds,
     build_relations,
     object_node_id,
     zone_node_id,

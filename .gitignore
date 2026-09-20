@@ -62,3 +62,21 @@ runs/mvp/person_carton_v1/weights/
 runs/mvp/person_carton_v3_expanded/weights/
 
 .vercel
+
+# ==========================================
+# Agent tooling (installed per machine, not project source)
+# ==========================================
+# The impeccable design skill is installed with `npx impeccable install`.
+# It ships a platform-specific binary and is ~17 MB, so it is fetched rather
+# than committed. `.claude/launch.json` is kept: it is the shared dev-server
+# definition for this project.
+.claude/skills/
+.claude/agents/
+.claude/settings.local.json
+
+# Impeccable working files. The surface briefs under .impeccable/surfaces/
+# hold the durable design contracts and ARE committed; these are caches.
+.impeccable/hook.cache.json
+.impeccable/questions/
+.impeccable/mocks/
+.impeccable/config.local.json

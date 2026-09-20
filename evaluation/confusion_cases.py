@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
+from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
+
 import yaml
 
 from kavach.perception.dataset import validate_yolo_dataset
@@ -203,7 +204,7 @@ def evaluate_confusion_cases(
     totals: Counter[str] = Counter()
     all_cases: list[dict[str, object]] = []
     per_image: list[dict[str, object]] = []
-    for image_path, result in zip(image_paths, results):
+    for image_path, result in zip(image_paths, results, strict=False):
         labels = _ground_truth(
             image_path,
             _label_dir(image_path.parent) / f"{image_path.stem}.txt",
@@ -216,7 +217,7 @@ def evaluate_confusion_cases(
             confidences = boxes.conf.cpu().tolist()
             class_ids = boxes.cls.cpu().tolist()
             result_names = getattr(result, "names", None) or names
-            for coordinate, confidence, class_id_value in zip(coordinates, confidences, class_ids):
+            for coordinate, confidence, class_id_value in zip(coordinates, confidences, class_ids, strict=False):
                 class_id = int(class_id_value)
                 class_name = result_names[class_id] if isinstance(result_names, list) else result_names[class_id]
                 predicted.append(Box(class_id, str(class_name), tuple(float(v) for v in coordinate), float(confidence)))

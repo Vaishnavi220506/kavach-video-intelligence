@@ -54,7 +54,7 @@ class GroundPlaneCalibration:
         *,
         method: int = 0,
         ransac_reprojection_threshold: float = 3.0,
-    ) -> "GroundPlaneCalibration":
+    ) -> GroundPlaneCalibration:
         """Estimate a homography from four or more corresponding point pairs."""
 
         image_array = _points_array(image_points, "image_points")

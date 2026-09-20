@@ -2,16 +2,15 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Mapping
-from dataclasses import dataclass
 import math
 import re
+from collections.abc import Iterable, Mapping
+from dataclasses import dataclass
 from numbers import Real
 from typing import TYPE_CHECKING
 
 from ..perception.tracker import TrackedObject
 from .geometry import (
-    bbox_center,
     bbox_intersection,
     bbox_iou,
     bottom_center,

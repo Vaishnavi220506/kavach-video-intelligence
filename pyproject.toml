@@ -1,0 +1,56 @@
+# Tooling configuration only.
+#
+# Packaging deliberately stays where it is: `requirements.txt` is the
+# documented install path for the full pipeline, and `backend/pyproject.toml`
+# describes the API service. Adding a second [project] table here would give
+# the repository two competing package definitions.
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+addopts = "-q --strict-markers --strict-config"
+filterwarnings = [
+  "ignore::DeprecationWarning:torch.*",
+  "ignore::UserWarning:ultralytics.*",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["runs", "weights", "reports", "notebooks", "frontend"]
+
+[tool.ruff.lint]
+select = [
+  "E",    # pycodestyle errors
+  "F",    # pyflakes
+  "I",    # import sorting
+  "UP",   # pyupgrade
+  "B",    # bugbear
+  "C4",   # comprehensions
+  "SIM",  # simplify
+  "RUF",
+]
+ignore = [
+  "E501",    # line length is handled by the formatter, not the linter
+  "B008",    # FastAPI's Depends/File defaults are the framework's idiom
+  "SIM108",  # ternaries are not always clearer than an if/else here
+  # The codebase uses correct typography in prose: en dashes in ranges and a
+  # real multiplication sign in frame dimensions such as 1920x1080. These are
+  # intended characters, not homoglyph mistakes.
+  "RUF001",
+  "RUF002",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Entry points and standalone scripts insert the repository root on sys.path
+# before importing the kavach package, so their imports cannot all sit at the
+# top of the file.
+"app/api/main.py" = ["E402"]
+"app/streamlit/app.py" = ["E402"]
+"backend/main.py" = ["E402"]
+"scripts/*" = ["E402"]
+"evaluation/*" = ["E402", "C4"]
+"tests/*" = ["B011"]
+
+[tool.ruff.format]
+quote-style = "double"

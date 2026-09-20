@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import math
 import re
+from dataclasses import dataclass
 from typing import Literal
-
 
 EVENT_BY_ID = "EVENT_BY_ID"
 EVENT_EXPLANATION = "EVENT_EXPLANATION"

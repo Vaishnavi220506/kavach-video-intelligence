@@ -15,7 +15,6 @@ from .base import (
     class_names,
 )
 
-
 UNSAFE_HUMAN_FORKLIFT_PROXIMITY = "UNSAFE_HUMAN_FORKLIFT_PROXIMITY"
 
 

@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
 import json
-
+from collections.abc import Mapping
 
 SYSTEM_PROMPT = """You are the KAVACH local video-evidence assistant.
 

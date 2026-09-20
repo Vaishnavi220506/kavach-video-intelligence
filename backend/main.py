@@ -7,9 +7,10 @@ routes, so this adapter restores that prefix at the service boundary.
 
 from __future__ import annotations
 
-from pathlib import Path
 import sys
-from typing import Any, Awaitable, Callable
+from collections.abc import Awaitable, Callable
+from pathlib import Path
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:

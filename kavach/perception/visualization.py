@@ -10,7 +10,6 @@ import numpy as np
 from .detector import Detection
 from .tracker import TrackedObject
 
-
 _COLORS: tuple[tuple[int, int, int], ...] = (
     (255, 128, 0),
     (0, 200, 255),

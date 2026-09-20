@@ -13,7 +13,6 @@ from .base import (
     class_names,
 )
 
-
 POSSIBLE_DRAGGING = "POSSIBLE_DRAGGING"
 
 
