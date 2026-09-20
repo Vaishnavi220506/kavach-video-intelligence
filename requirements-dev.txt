@@ -1,6 +1,12 @@
 # Development and CI dependencies.
 #
 # Kept separate from requirements.txt so installing the pipeline does not pull
-# in test and lint tooling. CI installs both.
-pytest>=7.4,<9
-ruff>=0.9,<0.13
+# in test and lint tooling.
+#
+# Both are pinned exactly. A lint gate on a floating version is not a gate:
+# a new ruff release adds rules, and CI starts failing on code nobody touched
+# while the same command passes locally. Bump these deliberately, run
+# `python -m ruff check .` locally, and fix what the new version finds in that
+# same commit.
+pytest==9.1.1
+ruff==0.9.10
