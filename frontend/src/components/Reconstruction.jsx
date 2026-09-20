@@ -30,8 +30,50 @@ const CLASS_TONE = {
   pallet: "#9fbf8f",
 };
 
+/* The source frame is 1920x1080, but the tracked geometry and the zone
+ * polygons only ever occupy part of it. Drawing the full frame would spend the
+ * top third of the plate on empty ground. The view is the bounding box of
+ * everything that is ever drawn, computed once so the framing stays put while
+ * scrubbing rather than lurching per frame. */
+const VIEW_PAD = 28;
+
 function toneFor(className) {
   return CLASS_TONE[className] || "#b9b3a2";
+}
+
+function computeView(tracks) {
+  if (!tracks) return { x: 0, y: 0, w: 1920, h: 1080 };
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+
+  const include = (x1, y1, x2, y2) => {
+    if (x1 < minX) minX = x1;
+    if (y1 < minY) minY = y1;
+    if (x2 > maxX) maxX = x2;
+    if (y2 > maxY) maxY = y2;
+  };
+
+  (tracks.zones || []).forEach((zone) => {
+    (zone.polygon || []).forEach(([x, y]) => include(x, y, x, y));
+  });
+  (tracks.frames || []).forEach((frame) => {
+    frame.o.forEach((object) => {
+      const [x1, y1, x2, y2] = object.b;
+      include(x1, y1, x2, y2);
+    });
+  });
+
+  if (!Number.isFinite(minX)) {
+    return { x: 0, y: 0, w: tracks.width || 1920, h: tracks.height || 1080 };
+  }
+
+  const x = Math.max(0, minX - VIEW_PAD);
+  const y = Math.max(0, minY - VIEW_PAD);
+  const right = Math.min(tracks.width || 1920, maxX + VIEW_PAD);
+  const bottom = Math.min(tracks.height || 1080, maxY + VIEW_PAD);
+  return { x, y, w: right - x, h: bottom - y };
 }
 
 /* Nearest sampled frame at or before `time`, so scrubbing lands on real
@@ -61,17 +103,36 @@ export default function Reconstruction({
   const clockRef = useRef(0);
   const [time, setTime] = useState(0);
   const [playing, setPlaying] = useState(false);
-  const [size, setSize] = useState({ width: 960, height: 540 });
+  const [width, setWidth] = useState(960);
+  /* Canvas text does not re-layout when a webfont arrives, so a first paint
+   * before the faces load would bake the platform sans and mono into the
+   * plate. Paint once the faces are ready, and repaint when they land. */
+  const [fontsReady, setFontsReady] = useState(false);
 
-  const duration = tracks?.duration || 0;
   const frames = tracks?.frames || [];
-  const sourceWidth = tracks?.width || 1920;
-  const sourceHeight = tracks?.height || 1080;
+  const duration = tracks?.duration || 0;
+  const view = useMemo(() => computeView(tracks), [tracks]);
+  const height = Math.round((width * view.h) / view.w);
 
   const highlighted = useMemo(
     () => new Set(selectedEvent?.entities || []),
     [selectedEvent]
   );
+
+  useEffect(() => {
+    let cancelled = false;
+    const ready = document.fonts?.ready;
+    if (!ready) {
+      setFontsReady(true);
+      return undefined;
+    }
+    ready.then(() => {
+      if (!cancelled) setFontsReady(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   /* Keep the canvas backing store matched to its CSS box and the device pixel
    * ratio, or the strokes go soft on a high-density display. */
@@ -79,12 +140,11 @@ export default function Reconstruction({
     const wrap = wrapRef.current;
     if (!wrap) return undefined;
     const observer = new ResizeObserver(([entry]) => {
-      const width = Math.max(240, Math.round(entry.contentRect.width));
-      setSize({ width, height: Math.round((width * sourceHeight) / sourceWidth) });
+      setWidth(Math.max(240, Math.round(entry.contentRect.width)));
     });
     observer.observe(wrap);
     return () => observer.disconnect();
-  }, [sourceWidth, sourceHeight]);
+  }, []);
 
   const draw = useCallback(
     (at) => {
@@ -92,7 +152,6 @@ export default function Reconstruction({
       if (!canvas || !frames.length) return;
       const context = canvas.getContext("2d");
       const ratio = window.devicePixelRatio || 1;
-      const { width, height } = size;
 
       if (canvas.width !== width * ratio || canvas.height !== height * ratio) {
         canvas.width = width * ratio;
@@ -101,8 +160,12 @@ export default function Reconstruction({
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
       context.clearRect(0, 0, width, height);
 
-      const scale = width / sourceWidth;
-      const sx = (value) => value * scale;
+      const scale = width / view.w;
+      const sx = (value) => (value - view.x) * scale;
+      const sy = (value) => (value - view.y) * scale;
+      /* Label type never drops below 11px: smaller than that the zone names
+       * and track tags stop being readable at phone width. */
+      const typeSize = Math.max(11, 11.5 * (width / 960));
 
       context.fillStyle = "#0e0e09";
       context.fillRect(0, 0, width, height);
@@ -111,20 +174,23 @@ export default function Reconstruction({
        * the grid says the coordinates are image-space pixels. */
       context.strokeStyle = "rgba(232, 228, 214, 0.05)";
       context.lineWidth = 1;
-      for (let x = 0; x <= sourceWidth; x += 240) {
+      const gridStep = 240;
+      for (let x = Math.ceil(view.x / gridStep) * gridStep; x <= view.x + view.w; x += gridStep) {
         context.beginPath();
         context.moveTo(sx(x), 0);
         context.lineTo(sx(x), height);
         context.stroke();
       }
-      for (let y = 0; y <= sourceHeight; y += 240) {
+      for (let y = Math.ceil(view.y / gridStep) * gridStep; y <= view.y + view.h; y += gridStep) {
         context.beginPath();
-        context.moveTo(0, sx(y));
-        context.lineTo(width, sx(y));
+        context.moveTo(0, sy(y));
+        context.lineTo(width, sy(y));
         context.stroke();
       }
 
-      /* Zones, drawn as surveyed boundaries with their names set small. */
+      /* Zones, drawn as surveyed boundaries. Their names sit along the bottom
+       * edge of each polygon, clear of the track tags that sit above boxes. */
+      const zoneLabels = [];
       context.setLineDash([6, 5]);
       context.lineWidth = 1.2;
       (tracks?.zones || []).forEach((zone) => {
@@ -136,30 +202,43 @@ export default function Reconstruction({
           : "rgba(232, 228, 214, 0.26)";
         context.beginPath();
         points.forEach(([x, y], index) => {
-          if (index === 0) context.moveTo(sx(x), sx(y));
-          else context.lineTo(sx(x), sx(y));
+          if (index === 0) context.moveTo(sx(x), sy(y));
+          else context.lineTo(sx(x), sy(y));
         });
         context.closePath();
         context.stroke();
 
         if (!compact) {
-          context.setLineDash([]);
-          context.font = `600 ${Math.max(9, 10 * (width / 960))}px Archivo, sans-serif`;
-          context.fillStyle = restricted
-            ? "rgba(214, 126, 112, 0.95)"
-            : "rgba(164, 158, 140, 0.9)";
-          context.fillText(
-            (ZONE_LABELS[zone.name] || zone.name).toUpperCase(),
-            sx(points[0][0]) + 6,
-            sx(points[0][1]) + 14
-          );
-          context.setLineDash([6, 5]);
+          const xs = points.map(([x]) => x);
+          const ys = points.map(([, y]) => y);
+          zoneLabels.push({
+            text: (ZONE_LABELS[zone.name] || zone.name).toUpperCase(),
+            x: sx(Math.min(...xs)) + 7,
+            y: sy(Math.max(...ys)) - 7,
+            restricted,
+          });
         }
       });
       context.setLineDash([]);
 
+      zoneLabels.forEach((label) => {
+        context.font = `600 ${typeSize}px Archivo, sans-serif`;
+        context.fillStyle = label.restricted
+          ? "rgba(224, 140, 126, 0.95)"
+          : "rgba(180, 174, 156, 0.95)";
+        context.fillText(label.text, label.x, label.y);
+      });
+
       const frame = frameAt(frames, at);
       if (!frame) return;
+
+      /* Two entities standing close together would otherwise print their tags
+       * on top of one another, which is exactly the moment the plate is being
+       * read — a proximity finding. Placed tags are remembered and a colliding
+       * one steps up until it is clear. */
+      const placedTags = [];
+      const collides = (a, b) =>
+        a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 
       frame.o.forEach((object) => {
         const [x1, y1, x2, y2] = object.b;
@@ -169,18 +248,18 @@ export default function Reconstruction({
 
         context.lineWidth = isHighlighted ? 2.4 : 1.3;
         context.strokeStyle = isHighlighted ? "#e8635a" : tone;
-        context.strokeRect(sx(x1), sx(y1), sx(x2 - x1), sx(y2 - y1));
+        context.strokeRect(sx(x1), sy(y1), sx(x2) - sx(x1), sy(y2) - sy(y1));
 
         if (isHighlighted) {
           /* Corner ticks mark the entity the selected finding names, so the
              link between the record and the picture is explicit. */
-          const tick = Math.max(6, sx(28));
+          const tick = Math.max(6, 28 * scale);
           context.lineWidth = 2.4;
           [
-            [sx(x1), sx(y1), 1, 1],
-            [sx(x2), sx(y1), -1, 1],
-            [sx(x1), sx(y2), 1, -1],
-            [sx(x2), sx(y2), -1, -1],
+            [sx(x1), sy(y1), 1, 1],
+            [sx(x2), sy(y1), -1, 1],
+            [sx(x1), sy(y2), 1, -1],
+            [sx(x2), sy(y2), -1, -1],
           ].forEach(([cx, cy, dx, dy]) => {
             context.beginPath();
             context.moveTo(cx + tick * dx, cy);
@@ -192,27 +271,37 @@ export default function Reconstruction({
 
         if (!compact) {
           const label = `${object.c} #${object.id}`;
-          context.font = `500 ${Math.max(9, 10.5 * (width / 960))}px "JetBrains Mono", monospace`;
-          const metrics = context.measureText(label);
-          const labelHeight = Math.max(13, sx(26));
+          context.font = `500 ${typeSize}px "JetBrains Mono", monospace`;
+          const textWidth = context.measureText(label).width;
+          const labelHeight = typeSize + 7;
+          /* The tag sits above the box, and drops inside it when there is no
+           * room above — which is also what keeps it clear of a zone name
+           * printed along a boundary near the top of the view. */
+          const above = sy(y1) - labelHeight >= 2;
+          let tagY = above ? sy(y1) - labelHeight : sy(y1);
+          const rect = { x: sx(x1), y: tagY, w: textWidth + 10, h: labelHeight };
+          let guard = 0;
+          while (placedTags.some((placed) => collides(rect, placed)) && guard < 6) {
+            rect.y -= labelHeight + 2;
+            guard += 1;
+          }
+          if (rect.y < 0) rect.y = tagY + labelHeight + 2;
+          tagY = rect.y;
+          placedTags.push(rect);
+
           context.fillStyle = isHighlighted ? "#e8635a" : tone;
-          context.fillRect(
-            sx(x1),
-            sx(y1) - labelHeight,
-            metrics.width + 10,
-            labelHeight
-          );
+          context.fillRect(rect.x, tagY, rect.w, labelHeight);
           context.fillStyle = "#0e0e09";
-          context.fillText(label, sx(x1) + 5, sx(y1) - labelHeight / 2 + 3.5);
+          context.fillText(label, rect.x + 5, tagY + labelHeight - 6);
         }
       });
     },
-    [frames, size, sourceWidth, sourceHeight, tracks, highlighted, compact]
+    [frames, width, height, view, tracks, highlighted, compact]
   );
 
   useEffect(() => {
     draw(time);
-  }, [draw, time]);
+  }, [draw, time, fontsReady]);
 
   useEffect(() => {
     if (!playing) return undefined;
@@ -256,8 +345,9 @@ export default function Reconstruction({
     [events]
   );
 
+  const liveCount = frameAt(frames, time)?.o.length || 0;
   const scaleBarPx = 400;
-  const scaleBarWidth = (scaleBarPx / sourceWidth) * 100;
+  const scaleBarWidth = (scaleBarPx / view.w) * 100;
 
   return (
     <figure className={`plate ${compact ? "plate--compact" : ""}`.trim()}>
@@ -265,11 +355,11 @@ export default function Reconstruction({
         <canvas
           ref={canvasRef}
           className="plate__canvas"
-          style={{ width: "100%", height: `${size.height}px` }}
+          style={{ width: "100%", height: `${height}px` }}
           role="img"
-          aria-label={`Reconstruction at ${formatTime(time)} of ${formatTime(duration)}. ${
-            frameAt(frames, time)?.o.length || 0
-          } tracked objects.`}
+          aria-label={`Reconstruction at ${formatTime(time)} of ${formatTime(
+            duration
+          )}. ${liveCount} tracked ${liveCount === 1 ? "object" : "objects"}.`}
         />
 
         <div className="plate__scale" aria-hidden="true">
@@ -330,8 +420,10 @@ export default function Reconstruction({
       <figcaption className="plate__caption">
         <span className="plate__caption-mark measure">Plate 1</span>
         <span>
-          Synthetic reconstruction, {sourceWidth}&#215;{sourceHeight} at {tracks?.fps || 25} fps.
-          Tracked geometry replayed from the controlled dataset, not camera footage.
+          Synthetic reconstruction, cropped to the tracked region of a{" "}
+          {tracks?.width || 1920}&#215;{tracks?.height || 1080} source at{" "}
+          {tracks?.fps || 25} fps. Tracked geometry replayed from the controlled
+          dataset, not camera footage.
         </span>
       </figcaption>
     </figure>

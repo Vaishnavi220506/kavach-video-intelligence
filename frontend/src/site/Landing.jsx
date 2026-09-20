@@ -147,6 +147,9 @@ export default function Landing({ video, tracks, onOpenWorkspace, sourceMode }) 
     (event) => event.signal_kind === "safety"
   ).length;
 
+  const caseNumber = `KVC-${String(video?.events?.length || 0).padStart(3, "0")}`;
+  const behaviourCount = Object.keys(behaviourCounts).length;
+
   return (
     <main id="main" className="site">
       {/* --- Cover -------------------------------------------------------- */}
@@ -160,47 +163,53 @@ export default function Landing({ video, tracks, onOpenWorkspace, sourceMode }) 
               KAVACH
               <small>Explainable temporal video intelligence</small>
             </span>
-            <dl className="cover__file">
-              <div>
-                <dt>Record</dt>
-                <dd className="measure">KVC-{String(video?.events?.length || 0).padStart(3, "0")}</dd>
-              </div>
-              <div>
-                <dt>Source</dt>
-                <dd className="measure">
-                  {video?.width || 1920}&#215;{video?.height || 1080} · {formatTime(video?.duration || 0)}
-                </dd>
-              </div>
-              <div>
-                <dt>Findings</dt>
-                <dd className="measure">{safetyCount} safety</dd>
-              </div>
-            </dl>
+          </div>
+
+          {/* The case header: what record this is, and the action, together
+              at the top of the document rather than a claim over buttons. */}
+          <div className="cover__case">
+            <div className="cover__case-id">
+              <p className="cover__case-number measure">{caseNumber}</p>
+              <p className="cover__case-source measure">
+                {video?.name} · {video?.width || 1920}&#215;{video?.height || 1080} ·{" "}
+                {formatTime(video?.duration || 0)} · {video?.fps || 25} fps
+              </p>
+            </div>
+            <button type="button" className="stamped" onClick={onOpenWorkspace}>
+              Open the demo
+              <Icon name="next" size={16} />
+            </button>
           </div>
 
           <h1 className="cover__finding">
             Video of physical operations, turned into a record you can argue with.
           </h1>
 
+          {/* The record's own finding, computed from the loaded rows. */}
+          {worked ? (
+            <p className="cover__verdict">
+              <span className="cover__verdict-mark">Finding</span>
+              {video.events.length} records across {behaviourCount} behaviours,{" "}
+              {safetyCount} of them safety findings. The highest scored{" "}
+              <strong className="measure">{formatScore(worked.risk?.score)}</strong>: a{" "}
+              {prettyLabel(worked.behaviour).toLowerCase()} at{" "}
+              <strong className="measure">{worked.timestamp_display}</strong>.
+            </p>
+          ) : null}
+
           <p className="cover__lede">
-            KAVACH watches for eleven operational behaviours, scores what it finds, and
-            writes the result as a numbered incident with its evidence attached. Every
-            score opens into the components that produced it. Every answer cites the
-            timestamp it came from. The language model reads the record; it never decides
-            what happened.
+            Eleven operational behaviours, scored and written as numbered incidents
+            with their evidence attached. Every score opens into the components that
+            produced it; every answer cites the timestamp it came from. The language
+            model reads the record, and never decides what happened.
           </p>
 
           <div className="cover__actions">
-            <button type="button" className="stamped" onClick={onOpenWorkspace}>
-              Open the demo
-              <Icon name="next" size={16} />
-            </button>
             <a className="quiet-action" href={REPO_URL} target="_blank" rel="noreferrer">
               <Icon name="code" size={16} />
               Read the source
             </a>
           </div>
-
         </div>
 
         {/* Plate 1 breaks the fold: the record is visibly already open. */}
@@ -481,15 +490,24 @@ export default function Landing({ video, tracks, onOpenWorkspace, sourceMode }) 
               SQLite and Ollama all need a runtime. The published site is the record and
               the demo; the pipeline runs on your machine.
             </p>
-            <pre className="terminal" tabIndex={0}>
-              <code>{`git clone ${REPO_URL}.git
+            {/* Dark ground is reserved for mounted material, so the listing
+                is mounted too: it carries the plate's caption bar rather than
+                borrowing the ground and none of the furniture. */}
+            <figure className="listing">
+              <pre className="listing__body" tabIndex={0}>
+                <code>{`git clone ${REPO_URL}.git
 cd kavach-video-intelligence
 python -m venv .venv && .venv/Scripts/activate
 pip install -r requirements.txt
 
 cd frontend && npm install && npm run build && cd ..
 python -m uvicorn app.api.main:app --port 8000`}</code>
-            </pre>
+              </pre>
+              <figcaption className="listing__caption">
+                <span className="listing__caption-mark measure">Listing 1</span>
+                <span>Local pipeline, from clone to a running service.</span>
+              </figcaption>
+            </figure>
             <p className="prose">
               Open <code>http://localhost:8000/</code> and the same interface connects to
               the real pipeline. For grounded explanations, run{" "}

@@ -12,13 +12,13 @@
 
 .cover {
   position: relative;
-  padding-top: var(--space-6);
+  padding-top: var(--space-5);
   padding-bottom: var(--space-7);
   border-bottom: 1px solid var(--rule);
 }
 
 .cover__inner {
-  padding-bottom: var(--space-6);
+  padding-bottom: var(--space-5);
 }
 
 .cover__masthead {
@@ -61,40 +61,79 @@
   color: var(--ink-3);
 }
 
-/* The file block: what a record carries in its header. */
-.cover__file {
+/* The case header. The case number sits at document scale with the source
+   metadata under it, and the primary action stands beside it, which is where
+   a record puts its identity and its one action. The date the contract asked
+   for has no source in the dataset and is not invented; the source geometry,
+   duration and frame rate are the header data that actually exists. */
+.cover__case {
   display: flex;
-  gap: var(--space-5);
-  margin: 0 0 0 auto;
-  padding: 0;
-  text-align: right;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-5);
+  padding: var(--space-4) 0;
+  margin-top: var(--space-4);
+  border-bottom: 1px solid var(--rule);
 }
 
-.cover__file dt {
+.cover__case-id {
+  min-width: 0;
+}
+
+.cover__case-number {
+  font-size: var(--step-2);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+.cover__case-source {
+  margin-top: var(--space-2);
+  font-size: var(--step--1);
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+
+/* The record's own stated finding, set as a report states one: labelled,
+   ruled off, and carrying the figures rather than describing them. */
+.cover__verdict {
+  max-width: var(--measure);
+  margin-top: var(--space-4);
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--rule-strong);
+  font-size: var(--step-0);
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+
+.cover__verdict-mark {
+  display: block;
+  margin-bottom: var(--space-2);
   font-family: var(--font-label);
   font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--stamp-deep);
 }
 
-.cover__file dd {
-  margin: 0.2rem 0 0;
-  font-size: var(--step--1);
+.cover__verdict strong {
   color: var(--ink);
+  font-weight: 600;
 }
 
 .cover__finding {
   max-width: 30ch;
-  margin-top: var(--space-6);
+  margin-top: var(--space-5);
   font-size: var(--step-5);
   font-weight: 700;
 }
 
 .cover__lede {
   max-width: var(--measure);
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
   font-size: var(--step-1);
   line-height: 1.6;
   color: var(--ink-2);
@@ -105,7 +144,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-4);
-  margin-top: var(--space-6);
+  margin-top: var(--space-4);
 }
 
 .cover__provenance {
@@ -614,29 +653,56 @@
   color: var(--ink-2);
 }
 
-/* --- Terminal plate --------------------------------------------------- */
+/* --- Mounted listing --------------------------------------------------- */
 
-/* Code is photographic material in this world: it goes on a plate. */
-.terminal {
+/* Dark ground belongs to the plate, so anything that takes it is mounted the
+   same way: a bounded figure with a caption bar naming what it is. */
+.listing {
   max-width: 52rem;
   margin: var(--space-5) 0 0;
-  padding: var(--space-5);
-  overflow-x: auto;
   background: var(--plate);
-  color: var(--plate-ink);
   border: 1px solid var(--ink);
   box-shadow: var(--lift-plate);
+}
+
+.listing__body {
+  margin: 0;
+  padding: var(--space-5);
+  overflow-x: auto;
+  color: var(--plate-ink);
   font-family: var(--font-measure);
   font-size: 0.82rem;
   line-height: 1.85;
 }
 
-.terminal code {
+.listing__body code {
   background: none;
   border: 0;
   padding: 0;
   color: inherit;
   font-size: inherit;
+}
+
+.listing__caption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--plate-sunk);
+  border-top: 1px solid rgba(232, 228, 214, 0.16);
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--plate-ink-soft);
+}
+
+.listing__caption-mark {
+  flex: 0 0 auto;
+  font-family: var(--font-measure);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--plate-ink);
 }
 
 /* --- Colophon --------------------------------------------------------- */
@@ -729,12 +795,6 @@
     border-top: 1px solid var(--rule);
   }
 
-  .cover__file {
-    width: 100%;
-    margin-left: 0;
-    text-align: left;
-  }
-
   .cover__masthead {
     flex-wrap: wrap;
   }
@@ -751,8 +811,15 @@
     grid-column: 1;
   }
 
-  .cover__file {
-    gap: var(--space-4);
+  /* The action drops below the case identity rather than squeezing beside
+     it, and spans the column so it stays the obvious next step. */
+  .cover__case {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cover__case .stamped {
+    justify-content: center;
   }
 
   .exhibit__head {

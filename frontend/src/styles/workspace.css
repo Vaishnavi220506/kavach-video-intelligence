@@ -76,12 +76,19 @@
 }
 
 /* Section index as ruled tabs: the current one is marked by a heavy rule on
-   the baseline, not by a filled pill. */
+   the baseline, not by a filled pill.
+
+   The strip scrolls when it has to, and the scrollbar is hidden, so a clipped
+   tab needs to say so some other way: the right edge fades out, which reads
+   as "there is more" rather than as a section that does not exist. Below the
+   fade's usefulness the strip wraps instead. */
 .workspace__nav {
   display: flex;
   gap: var(--space-5);
   overflow-x: auto;
   scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
 }
 
 .workspace__nav::-webkit-scrollbar {
@@ -437,10 +444,15 @@
   color: var(--ink);
 }
 
+/* The review state is stamped, not merely selected: the world's own device
+   for "this has been dispositioned by a person", carrying the stamp's inner
+   keyline so it reads as an impression rather than a filled toggle. */
 .review__set.is-active {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--paper);
+  background: var(--stamp);
+  border-color: var(--stamp-deep);
+  box-shadow: inset 0 0 0 1px rgba(242, 239, 231, 0.3);
+  color: var(--paper-edge);
+  font-weight: 700;
 }
 
 .review__set:disabled {
@@ -619,6 +631,22 @@
 
   .findings-layout__record {
     position: static;
+  }
+}
+
+/* Narrow enough that a fade would hide most of a tab: wrap the strip so every
+   section is visible at once, and drop the mask with the overflow. */
+@media (max-width: 480px) {
+  .workspace__nav {
+    flex-wrap: wrap;
+    gap: 0 var(--space-4);
+    overflow-x: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .workspace__nav button {
+    padding-block: var(--space-2) calc(var(--space-2) - 2px);
   }
 }
 

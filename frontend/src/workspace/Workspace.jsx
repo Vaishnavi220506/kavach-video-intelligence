@@ -70,9 +70,19 @@ function FindingRow({ event, selected, onSelect }) {
             {(event.entities || []).join(" · ") || "no linked entities"}
           </span>
         </span>
-        <span className={`finding__class finding__class--${event.signal_kind}`}>
-          {signalLabel(event.signal_kind)}
-        </span>
+        {/* A findings list is safety findings by default, so labelling every
+            row "safety finding" is noise that costs a line at phone width and
+            out-shouts the severity scale. Only a row that deviates is
+            marked. */}
+        {event.signal_kind === "safety" ? (
+          <span className="finding__class finding__class--safety sr-only">
+            {signalLabel(event.signal_kind)}
+          </span>
+        ) : (
+          <span className={`finding__class finding__class--${event.signal_kind}`}>
+            {signalLabel(event.signal_kind)}
+          </span>
+        )}
         <RiskReading category={event.risk?.category} score={event.risk?.score} />
       </button>
     </li>

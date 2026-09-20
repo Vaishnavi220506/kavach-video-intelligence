@@ -34,9 +34,11 @@
 
 /* Printed scale bar, bottom-left of the plate. It sits over the drawing, so
    it carries its own dark backing to stay legible whatever is beneath it. */
+/* Bottom right: zone names print along the bottom-left of each polygon, so
+   the left corner is already spoken for. */
 .plate__scale {
   position: absolute;
-  left: var(--space-4);
+  right: var(--space-4);
   bottom: var(--space-4);
   display: flex;
   flex-direction: column;
