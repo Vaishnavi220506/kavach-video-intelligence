@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- The bordered K lockup, kept as the existing brand commitment. -->
+  <rect width="32" height="32" fill="#f2efe7"/>
+  <rect x="2.5" y="2.5" width="27" height="27" fill="none" stroke="#1a1a18" stroke-width="2"/>
+  <path d="M11 8.5v15M11 16.4l7.6-7.9M13.6 14.1L21.2 23.5"
+        fill="none" stroke="#1a1a18" stroke-width="2.6" stroke-linecap="square"/>
+</svg>

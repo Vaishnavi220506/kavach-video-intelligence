@@ -1,0 +1,17 @@
+The font files in this directory are redistributed under the SIL Open Font
+License, Version 1.1. They were downloaded by scripts/fetch_fonts.py.
+
+  Spectral         Copyright 2017 Production Type
+                   https://fonts.google.com/specimen/Spectral
+  Archivo          Copyright 2011 Omnibus-Type
+                   https://fonts.google.com/specimen/Archivo
+  JetBrains Mono   Copyright 2020 JetBrains
+                   https://fonts.google.com/specimen/JetBrains+Mono
+
+Each family is licensed under the SIL Open Font License, Version 1.1, which
+is available with a FAQ at https://openfontlicense.org.
+
+The licence permits redistribution of the font files, bundled with software,
+provided this notice is retained. The fonts are not sold on their own, and
+the KAVACH MIT licence in the repository root applies to the project's own
+source, not to these font binaries.

@@ -10,8 +10,8 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 import yaml
 
@@ -78,8 +78,9 @@ def train(args: argparse.Namespace) -> dict[str, object]:
 
         torch.use_deterministic_algorithms = safe_use_deterministic_algorithms
 
-    from kavach.perception.detector import resolve_device
     from ultralytics import YOLO
+
+    from kavach.perception.detector import resolve_device
 
     model_path = Path(args.base_model).expanduser().resolve()
     if not model_path.is_file():

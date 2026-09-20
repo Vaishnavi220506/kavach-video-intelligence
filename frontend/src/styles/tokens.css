@@ -1,0 +1,97 @@
+/* KAVACH — The Evidence Board
+ *
+ * The world is the artifact the system produces: a numbered, auditable
+ * incident record on report stock. Light ground is not a default here, it is
+ * the use scene — a supervisor or reviewer reading a printed finding at a
+ * desk. Moving and photographic material is the exception, and it appears
+ * only inside tipped-in plates that carry their own dark ground.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* --- Stock ------------------------------------------------------------ */
+  --paper: #f2efe7;
+  --paper-sunk: #eae5d9;
+  --paper-deep: #e0dacb;
+  --paper-edge: #f7f5ef;
+
+  /* Tipped-in plates: photographic and moving material only. */
+  --plate: #17170f;
+  --plate-sunk: #0e0e09;
+  --plate-ink: #e8e4d6;
+  --plate-ink-soft: #a49e8c;
+
+  /* --- Ink -------------------------------------------------------------- */
+  --ink: #1a1a18;
+  --ink-2: #4a463d;
+  --ink-3: #6b6558;
+  --ink-4: #8c8677;
+
+  /* Hairlines. The document is ruled, so rules do structural work that
+     borders and cards would otherwise do. */
+  --rule: #c9c2b2;
+  --rule-strong: #8c8677;
+  --rule-hair: #ded8c9;
+
+  /* --- Marks ------------------------------------------------------------ */
+  /* The exhibit stamp is the single accent. It marks the primary action, the
+     current selection, and nothing else. */
+  --stamp: #b23a2e;
+  --stamp-deep: #8d2c22;
+  --stamp-wash: rgba(178, 58, 46, 0.08);
+
+  /* Severity. Colour reinforces; it never carries the state alone. Every
+     risk reading also prints a four-segment scale, so the value survives
+     greyscale, colour-blind viewing, and a monochrome printout. */
+  --risk-low: #4f7a4a;
+  --risk-medium: #a8761a;
+  --risk-high: #b23a2e;
+  --risk-critical: #5a1f2d;
+  --verified: #3f6b4a;
+
+  /* --- Type ------------------------------------------------------------- */
+  /* Spectral sets the document and the finding. Archivo is the label and
+     caption voice. JetBrains Mono is reserved for measured quantities —
+     timecodes, pixel distances, scores, identifiers — and never used as a
+     costume for "technical". */
+  --font-document: "Spectral", Georgia, "Times New Roman", serif;
+  --font-label: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-measure: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
+
+  --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
+  --step-0: clamp(0.95rem, 0.92rem + 0.15vw, 1.03rem);
+  --step-1: clamp(1.13rem, 1.06rem + 0.32vw, 1.33rem);
+  --step-2: clamp(1.4rem, 1.26rem + 0.62vw, 1.8rem);
+  --step-3: clamp(1.75rem, 1.5rem + 1.1vw, 2.5rem);
+  --step-4: clamp(2.2rem, 1.7rem + 2.2vw, 3.6rem);
+  --step-5: clamp(2.7rem, 1.8rem + 4vw, 5.2rem);
+
+  --measure: 68ch;
+  --measure-tight: 54ch;
+
+  /* --- Geometry --------------------------------------------------------- */
+  /* A document has margins and a gutter, not a card grid. */
+  --gutter: clamp(1rem, 0.6rem + 2vw, 3.5rem);
+  --page-max: 78rem;
+  --plate-radius: 2px;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 7rem;
+
+  /* Depth is print depth: a tipped-in plate sits slightly proud of the page,
+     so its shadow carries a real offset and a soft blur. */
+  --lift-plate: 0 1px 2px rgba(26, 26, 24, 0.1), 0 10px 24px -12px rgba(26, 26, 24, 0.35);
+  --lift-raised: 0 1px 1px rgba(26, 26, 24, 0.07), 0 4px 12px -6px rgba(26, 26, 24, 0.25);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration: 420ms;
+  --duration-fast: 180ms;
+}

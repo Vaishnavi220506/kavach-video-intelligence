@@ -9,10 +9,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-from pathlib import Path
 import re
 import sys
-from typing import Iterable
+from collections.abc import Iterable
+from pathlib import Path
 
 import cv2
 
@@ -26,9 +26,7 @@ from kavach.video import VideoError, VideoReader
 def _safe_stem(path: Path) -> str:
     stem = re.sub(r"[^A-Za-z0-9_-]+", "_", path.stem).strip("_") or "video"
     digest = hashlib.sha1(
-        f"{path.resolve()}|{path.stat().st_size}|{path.stat().st_mtime_ns}".encode(
-            "utf-8"
-        )
+        f"{path.resolve()}|{path.stat().st_size}|{path.stat().st_mtime_ns}".encode()
     ).hexdigest()[:8]
     return f"{stem}_{digest}"
 

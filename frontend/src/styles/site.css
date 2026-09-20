@@ -1,0 +1,766 @@
+/* The public record: cover, sections, exhibits, plates.
+ *
+ * Structure comes from rules, margins and folios — the devices a document
+ * actually uses — rather than from a grid of cards.
+ */
+
+.site {
+  padding-bottom: var(--space-8);
+}
+
+/* --- Cover -------------------------------------------------------------- */
+
+.cover {
+  position: relative;
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-7);
+  border-bottom: 1px solid var(--rule);
+}
+
+.cover__inner {
+  padding-bottom: var(--space-6);
+}
+
+.cover__masthead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 2px solid var(--ink);
+}
+
+/* The bordered K is an existing brand commitment; it is kept and set in the
+   label voice rather than redrawn. */
+.cover__mark {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 1.5px solid var(--ink);
+  font-family: var(--font-label);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.cover__wordmark {
+  display: grid;
+  gap: 0.15rem;
+  font-family: var(--font-label);
+  font-size: var(--step-1);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.cover__wordmark small {
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+
+/* The file block: what a record carries in its header. */
+.cover__file {
+  display: flex;
+  gap: var(--space-5);
+  margin: 0 0 0 auto;
+  padding: 0;
+  text-align: right;
+}
+
+.cover__file dt {
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.cover__file dd {
+  margin: 0.2rem 0 0;
+  font-size: var(--step--1);
+  color: var(--ink);
+}
+
+.cover__finding {
+  max-width: 30ch;
+  margin-top: var(--space-6);
+  font-size: var(--step-5);
+  font-weight: 700;
+}
+
+.cover__lede {
+  max-width: var(--measure);
+  margin-top: var(--space-5);
+  font-size: var(--step-1);
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.cover__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.cover__provenance {
+  max-width: var(--measure);
+  margin-top: var(--space-5);
+  font-size: var(--step--1);
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+
+/* Plate 1 sits proud of the page and crosses the fold, so the record reads as
+   already open rather than as an image of one. */
+.cover__plate {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Actions ------------------------------------------------------------ */
+
+/* The stamped control. An inked impression: filled, letterspaced, with an
+   inner keyline the way a rubber stamp leaves a double edge. */
+.stamped {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.35rem;
+  background: var(--stamp);
+  color: var(--paper-edge);
+  border: 1px solid var(--stamp-deep);
+  box-shadow: inset 0 0 0 1px rgba(242, 239, 231, 0.28);
+  font-family: var(--font-label);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.stamped:hover {
+  background: var(--stamp-deep);
+  transform: translateY(-1px);
+}
+
+.stamped:active {
+  transform: translateY(0);
+}
+
+.stamped .icon {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.stamped:hover .icon {
+  transform: translateX(3px);
+}
+
+.quiet-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 0;
+  font-family: var(--font-label);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule-strong);
+  transition: color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.quiet-action:hover {
+  color: var(--stamp-deep);
+  border-color: var(--stamp);
+}
+
+/* --- Sections ----------------------------------------------------------- */
+
+.section {
+  padding-block: var(--space-8);
+  border-bottom: 1px solid var(--rule-hair);
+}
+
+.section--sunk {
+  background: var(--paper-sunk);
+}
+
+/* Folio in the margin, the way a document numbers its sections for citation.
+   It is marginalia beside the heading, never a label stacked above it. */
+.section__grid {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+.section__folio {
+  margin: 0.55rem 0 0;
+  font-size: var(--step--1);
+  font-weight: 500;
+  color: var(--ink-4);
+  letter-spacing: 0.04em;
+}
+
+.section__body > h2 {
+  max-width: 34ch;
+  font-size: var(--step-3);
+}
+
+.prose {
+  max-width: var(--measure);
+  margin-top: var(--space-4);
+  font-size: var(--step-0);
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+
+.prose + .prose {
+  margin-top: var(--space-4);
+}
+
+.section__body code,
+.prose code {
+  padding: 0.1em 0.35em;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule-hair);
+  font-size: 0.86em;
+}
+
+.section--sunk .section__body code {
+  background: var(--paper);
+}
+
+/* --- Pipeline stages ---------------------------------------------------- */
+
+.stages {
+  counter-reset: stage;
+  list-style: none;
+  max-width: 62rem;
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.stage {
+  counter-increment: stage;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--rule-hair);
+}
+
+.stage::before {
+  content: counter(stage, decimal-leading-zero);
+  font-family: var(--font-measure);
+  font-size: var(--step--1);
+  color: var(--ink-4);
+}
+
+.stage__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem var(--space-4);
+}
+
+.stage__head h3 {
+  font-size: var(--step-1);
+}
+
+.stage__module {
+  font-size: var(--step--1);
+  color: var(--ink-3);
+}
+
+.stage p {
+  max-width: var(--measure);
+  margin-top: var(--space-2);
+  line-height: 1.7;
+  color: var(--ink-2);
+  grid-column: 2;
+}
+
+/* The final stage is downstream of the record, and the rule above it says so
+   by doubling. */
+.stage--downstream {
+  border-top: 2px solid var(--ink);
+  margin-top: -1px;
+}
+
+.stage--downstream .stage__head h3 {
+  color: var(--stamp-deep);
+}
+
+/* --- Exhibit ------------------------------------------------------------ */
+
+/* A bounded figure with its own keyline: the report's exhibit, not a card in
+   a grid of cards. There is exactly one. */
+.exhibit {
+  margin-top: var(--space-6);
+  background: var(--paper-edge);
+  border: 1px solid var(--rule-strong);
+  box-shadow: var(--lift-raised);
+}
+
+.exhibit__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-bottom: 1px solid var(--rule);
+}
+
+.exhibit__head h3 {
+  font-size: var(--step-2);
+}
+
+.exhibit__meta {
+  margin-top: 0.4rem;
+  font-size: var(--step--1);
+  color: var(--ink-3);
+}
+
+.exhibit__score {
+  display: grid;
+  justify-items: end;
+  gap: 0.3rem;
+}
+
+.exhibit__score-value {
+  font-size: var(--step-3);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.exhibit__score-category {
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink-2);
+}
+
+/* Severity as a printed four-segment scale. This is the carrier: the value
+   survives greyscale, colour-blind viewing and a monochrome printout. */
+.scale {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.scale__seg {
+  width: 11px;
+  height: 7px;
+  border: 1px solid currentColor;
+}
+
+.scale__seg.is-filled {
+  background: currentColor;
+}
+
+.risk-low {
+  color: var(--risk-low);
+}
+
+.risk-medium {
+  color: var(--risk-medium);
+}
+
+.risk-high {
+  color: var(--risk-high);
+}
+
+.risk-critical {
+  color: var(--risk-critical);
+}
+
+.exhibit__split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+}
+
+.exhibit__split > div {
+  padding: var(--space-5);
+}
+
+.exhibit__split > div + div {
+  border-left: 1px solid var(--rule);
+}
+
+.exhibit__split h4,
+.recommendation h4 {
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: var(--space-3);
+}
+
+.exhibit__note {
+  margin-top: var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--ink-3);
+}
+
+/* --- Ledger tables ----------------------------------------------------- */
+
+.ledger {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+}
+
+.ledger th,
+.ledger td {
+  padding: 0.55rem 0.6rem 0.55rem 0;
+  text-align: left;
+  vertical-align: baseline;
+  border-bottom: 1px solid var(--rule-hair);
+}
+
+.ledger thead th {
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.ledger tbody th {
+  font-family: var(--font-document);
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.ledger tbody tr:last-child th,
+.ledger tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.ledger td {
+  color: var(--ink-2);
+}
+
+/* The contribution bar is drawn under the figure it belongs to, so the number
+   stays readable and the bar is a second reading of the same value. */
+.ledger__bar-cell {
+  position: relative;
+  min-width: 7rem;
+  padding-bottom: 0.9rem;
+}
+
+.ledger__bar {
+  position: absolute;
+  left: 0;
+  bottom: 0.45rem;
+  height: 3px;
+  background: var(--stamp);
+  opacity: 0.55;
+}
+
+.ledger--index {
+  margin-top: var(--space-5);
+  max-width: 48rem;
+}
+
+/* --- Readings and recommendation -------------------------------------- */
+
+.readings {
+  margin: 0;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule-hair);
+}
+
+.readings > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--rule-hair);
+}
+
+.readings dt {
+  font-size: var(--step--1);
+  color: var(--ink-2);
+}
+
+.readings dd {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--ink);
+  text-align: right;
+}
+
+.recommendation {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule-strong);
+}
+
+.recommendation p {
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+.recommendation strong {
+  color: var(--ink);
+}
+
+.recommendation__rule {
+  margin-top: var(--space-2);
+  color: var(--ink-3);
+}
+
+/* --- Measured figures -------------------------------------------------- */
+
+.measured {
+  margin-top: var(--space-6);
+  border-top: 1px solid var(--rule-strong);
+}
+
+.measured__row {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: var(--space-5);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--rule-hair);
+}
+
+.measured__value {
+  font-size: var(--step-2);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.measured__body h3 {
+  font-size: var(--step-1);
+}
+
+.measured__body p {
+  max-width: var(--measure);
+  margin-top: var(--space-2);
+  font-size: var(--step--1);
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+
+/* The limit prints beside the figure, not in a footnote. */
+.measured__limit {
+  display: flex;
+  gap: 0.55rem;
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule-hair);
+  color: var(--ink-2);
+}
+
+.measured__limit .icon {
+  flex: 0 0 auto;
+  margin-top: 0.28em;
+  color: var(--risk-medium);
+}
+
+.measured__source {
+  margin-top: var(--space-2);
+  font-size: 0.74rem;
+  color: var(--ink-3);
+}
+
+.limits__heading {
+  margin-top: var(--space-7);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--ink);
+  font-size: var(--step-1);
+}
+
+.limits {
+  max-width: 58rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.limits li {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--rule-hair);
+  font-size: var(--step--1);
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+
+/* --- Terminal plate --------------------------------------------------- */
+
+/* Code is photographic material in this world: it goes on a plate. */
+.terminal {
+  max-width: 52rem;
+  margin: var(--space-5) 0 0;
+  padding: var(--space-5);
+  overflow-x: auto;
+  background: var(--plate);
+  color: var(--plate-ink);
+  border: 1px solid var(--ink);
+  box-shadow: var(--lift-plate);
+  font-family: var(--font-measure);
+  font-size: 0.82rem;
+  line-height: 1.85;
+}
+
+.terminal code {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* --- Colophon --------------------------------------------------------- */
+
+.colophon {
+  padding-block: var(--space-6);
+  border-top: 2px solid var(--ink);
+}
+
+.colophon__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+  justify-content: space-between;
+  font-size: var(--step--1);
+  color: var(--ink-2);
+}
+
+.colophon__note {
+  max-width: 46ch;
+  color: var(--ink-3);
+}
+
+/* --- The one authored moment ------------------------------------------ */
+
+/* The cover settles once on load. Content is fully visible without the
+   animation, so nothing depends on it running. */
+@media (prefers-reduced-motion: no-preference) {
+  .cover__finding,
+  .cover__lede,
+  .cover__actions,
+  .cover__plate {
+    animation: settle var(--duration) var(--ease-out) both;
+  }
+
+  .cover__lede {
+    animation-delay: 60ms;
+  }
+
+  .cover__actions {
+    animation-delay: 110ms;
+  }
+
+  .cover__plate {
+    animation-delay: 160ms;
+    animation-duration: 640ms;
+  }
+
+  .cover__masthead {
+    animation: rule-in 700ms var(--ease-out) both;
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: translateY(14px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes rule-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* --- Responsive ------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .section__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+
+  .section__folio {
+    margin-top: 0;
+  }
+
+  .exhibit__split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .exhibit__split > div + div {
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .cover__file {
+    width: 100%;
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .cover__masthead {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 640px) {
+  .measured__row,
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+
+  .stage p {
+    grid-column: 1;
+  }
+
+  .cover__file {
+    gap: var(--space-4);
+  }
+
+  .exhibit__head {
+    flex-direction: column;
+  }
+
+  .exhibit__score {
+    justify-items: start;
+  }
+
+  .ledger--index,
+  .ledger {
+    font-size: 0.8rem;
+  }
+}

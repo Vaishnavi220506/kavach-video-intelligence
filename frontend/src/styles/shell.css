@@ -1,0 +1,70 @@
+/* Shell furniture: the boot state and the error banner. */
+
+.boot {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-4);
+}
+
+.boot__mark {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin: 0;
+  border: 1.5px solid var(--ink);
+  font-family: var(--font-label);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.boot__note {
+  font-family: var(--font-label);
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* The banner states the problem; dismissing it is the recovery when the
+   message is informational, and the text names the actual failure. */
+.banner {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--gutter);
+  background: var(--stamp);
+  color: var(--paper-edge);
+  font-size: var(--step--1);
+  line-height: 1.6;
+}
+
+.banner .icon {
+  flex: 0 0 auto;
+  margin-top: 0.2em;
+}
+
+.banner span {
+  flex: 1;
+}
+
+.banner button {
+  flex: 0 0 auto;
+  color: inherit;
+  opacity: 0.8;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.banner button:hover {
+  opacity: 1;
+}
+
+.banner :focus-visible {
+  outline-color: var(--paper-edge);
+}
